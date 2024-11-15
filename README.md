@@ -11,9 +11,9 @@
 ## 🧑‍💻 기여자  
 | 이름      | Github 프로필     | 역할            |  
 |-----------|-----------------|-----------------|  
-| 권민지     | [mjgwon24](https://github.com/mjgwon24) | frontend & backend 개발 |  
-| 김이현     | [lh7721004](https://github.com/lh7721004) | frontend & backend 개발 |  
-| 전상은 | [wowddok99](https://github.com/wowddok99) | frontend & backend 개발 |  
+| 권민지     | [mjgwon24](https://github.com/mjgwon24) | frontend & backend & design |
+| 김이현     | [lh7721004](https://github.com/lh7721004) | frontend & backend |  
+| 전상은 | [wowddok99](https://github.com/wowddok99) | frontend & backend |  
 | 전형주     | [kavu-multi](https://github.com/kavu-multi) | AI/ML Engineer |  
 
 ---
