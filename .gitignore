@@ -279,9 +279,7 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
-application.yml
 application.properties
-*.yml
 *.properties
 build/
 gradle/
