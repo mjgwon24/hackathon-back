@@ -34,6 +34,8 @@ public class ReviewPost {
 
     private LocalDateTime updatedAt;
 
+    private int likeCount;
+
     @ElementCollection
     @CollectionTable(name = "review_post_images", joinColumns = @JoinColumn(name = "review_post_id"))
     private List<String> imagePathList;
