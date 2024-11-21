@@ -28,7 +28,7 @@ public record ReviewPostDto() {
     }
 
     @Builder
-    public record CreateReviewPostResponse(
+    public record ReviewPostResponse(
             Long id,
             String title,
             String category,

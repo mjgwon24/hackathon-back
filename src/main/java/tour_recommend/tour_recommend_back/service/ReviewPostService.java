@@ -3,16 +3,19 @@ package tour_recommend.tour_recommend_back.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tour_recommend.tour_recommend_back.dto.ReviewPostDto.CreateReviewPostRequest;
-import tour_recommend.tour_recommend_back.dto.ReviewPostDto.CreateReviewPostResponse;
+import tour_recommend.tour_recommend_back.dto.ReviewPostDto.ReviewPostResponse;
 import tour_recommend.tour_recommend_back.entity.ReviewPost;
 import tour_recommend.tour_recommend_back.repository.ReviewPostRepository;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class ReviewPostService {
     private final ReviewPostRepository reviewPostRepository;
 
-    public CreateReviewPostResponse createReviewPost(CreateReviewPostRequest createReviewPostRequest) {
+    // 후기 등록
+    public ReviewPostResponse createReviewPost(CreateReviewPostRequest createReviewPostRequest) {
         ReviewPost reviewPost = CreateReviewPostRequest.builder()
                 .title(createReviewPostRequest.title())
                 .category(createReviewPostRequest.category())
@@ -23,7 +26,7 @@ public class ReviewPostService {
 
         ReviewPost reviewPostPs = reviewPostRepository.save(reviewPost);
 
-        return CreateReviewPostResponse.builder()
+        return ReviewPostResponse.builder()
                 .id(reviewPostPs.getId())
                 .title(reviewPostPs.getTitle())
                 .category(reviewPostPs.getCategory())
@@ -33,5 +36,22 @@ public class ReviewPostService {
                 .updateAt(reviewPostPs.getUpdatedAt())
                 .likeCount(reviewPostPs.getLikeCount())
                 .build();
+    }
+
+    // 모든 후기 조회
+    public List<ReviewPostResponse> getAllReviewPosts() {
+        return reviewPostRepository.findAll().stream()
+                .map(reviewPost -> ReviewPostResponse.builder()
+                        .id(reviewPost.getId())
+                        .title(reviewPost.getTitle())
+                        .category(reviewPost.getCategory())
+                        .contents(reviewPost.getContents())
+                        .imagePathList(reviewPost.getImagePathList())
+                        .createAt(reviewPost.getCreatedAt())
+                        .updateAt(reviewPost.getUpdatedAt())
+                        .likeCount(reviewPost.getLikeCount())
+                        .build()
+                )
+                .toList();
     }
 }
