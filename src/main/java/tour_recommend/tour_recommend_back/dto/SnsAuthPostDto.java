@@ -58,13 +58,13 @@ public record SnsAuthPostDto () {
 
     @Builder
     public record FetchSnsAuthPostsResponse(
-            List<SnsAuthPostResponse> snsAuthPosts,
+            List<FetchedSnsAuthPost> snsAuthPosts,
             int currentPage,
             int totalPages,
             Long totalElements
     ) {
         @Builder
-        public record SnsAuthPostResponse(
+        public record FetchedSnsAuthPost(
             Long id,
             String title,
             String contents,

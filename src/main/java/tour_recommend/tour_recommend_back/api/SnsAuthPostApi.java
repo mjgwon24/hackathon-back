@@ -42,7 +42,7 @@ public class SnsAuthPostApi {
 
     @GetMapping("/posts")
     public ResponseEntity<ResponseDto<FetchSnsAuthPostsResponse>> fetchSnsAuthPosts(@RequestParam(defaultValue = "0") int pageNumber,
-                                                                                                   @RequestParam(defaultValue = "10") int size) {
+                                                                                    @RequestParam(defaultValue = "10") int size) {
         FetchSnsAuthPostsResponse fetchSnsAuthPostsResponse = snsAuthPostService.fetchSnsAuthPosts(pageNumber, size);
 
         return new ResponseEntity<>(

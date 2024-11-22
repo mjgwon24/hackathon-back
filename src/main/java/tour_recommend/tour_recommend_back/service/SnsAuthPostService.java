@@ -3,7 +3,9 @@ package tour_recommend.tour_recommend_back.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.FetchSnsAuthPostsResponse.FetchedSnsAuthPost;
 import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.FetchSnsAuthPostsResponse;
 import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.FetchSnsAuthPostResponse;
 import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.CreateSnsAuthPostRequest;
@@ -62,13 +64,16 @@ public class SnsAuthPostService {
     }
 
     public FetchSnsAuthPostsResponse fetchSnsAuthPosts(int pageNumber, int size) {
+        // Sort 객체를 생성하여 정렬 기준을 설정합니다.
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
+
         // 페이지 번호와 페이지 크기를 사용하여 PageRequest 객체를 생성합니다.
-        PageRequest pageRequest = PageRequest.of(pageNumber, size);
+        PageRequest pageRequest = PageRequest.of(pageNumber, size, sort);
 
         Page<SnsAuthPost> fetchSnsAuthPosts = snsAuthPostRepository.findAll(pageRequest);
 
-        List<FetchSnsAuthPostsResponse.SnsAuthPostResponse> snsAuthPosts = fetchSnsAuthPosts.get()
-                .map(snsAuthPost -> FetchSnsAuthPostsResponse.SnsAuthPostResponse.builder()
+        List<FetchedSnsAuthPost> snsAuthPosts = fetchSnsAuthPosts.get()
+                .map(snsAuthPost -> FetchedSnsAuthPost.builder()
                         .id(snsAuthPost.getId())
                         .title(snsAuthPost.getTitle())
                         .contents(snsAuthPost.getContents())
