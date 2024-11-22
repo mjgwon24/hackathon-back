@@ -38,6 +38,23 @@ public class ReviewPostService {
                 .build();
     }
 
+    // 후기 단건 조회
+    public ReviewPostResponse getReviewPost(Long postId) {
+        ReviewPost reviewPostPs = reviewPostRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("postId에 해당하는 후기 게시글이 존재하지 않습니다."));
+
+        return ReviewPostResponse.builder()
+                .id(reviewPostPs.getId())
+                .title(reviewPostPs.getTitle())
+                .category(reviewPostPs.getCategory())
+                .contents(reviewPostPs.getContents())
+                .imagePathList(reviewPostPs.getImagePathList())
+                .createAt(reviewPostPs.getCreatedAt())
+                .updateAt(reviewPostPs.getUpdatedAt())
+                .likeCount(reviewPostPs.getLikeCount())
+                .build();
+    }
+
     // 모든 후기 조회 - createdAt 기준 최신순 반환
     public List<ReviewPostResponse> getAllReviewPosts() {
         return reviewPostRepository.findAllByOrderByCreatedAtDesc().stream()
