@@ -55,4 +55,21 @@ public record SnsAuthPostDto () {
             LocalDateTime createAt,
             LocalDateTime updateAt
     ) {}
+
+    @Builder
+    public record FetchSnsAuthPostsResponse(
+            List<SnsAuthPostResponse> snsAuthPosts,
+            int currentPage,
+            int totalPages,
+            Long totalElements
+    ) {
+        @Builder
+        public record SnsAuthPostResponse(
+            Long id,
+            String title,
+            String contents,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt
+        ) {}
+    }
 }

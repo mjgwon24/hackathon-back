@@ -1,12 +1,17 @@
 package tour_recommend.tour_recommend_back.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.FetchSnsAuthPostsResponse;
 import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.FetchSnsAuthPostResponse;
 import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.CreateSnsAuthPostRequest;
 import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.CreateSnsAuthPostResponse;
 import tour_recommend.tour_recommend_back.entity.SnsAuthPost;
 import tour_recommend.tour_recommend_back.repository.SnsAuthPostRepository;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -53,6 +58,30 @@ public class SnsAuthPostService {
                 .imagePathList(snsAuthPostPs.getImagePathList())
                 .createAt(snsAuthPostPs.getCreatedAt())
                 .updateAt(snsAuthPostPs.getUpdatedAt())
+                .build();
+    }
+
+    public FetchSnsAuthPostsResponse fetchSnsAuthPosts(int pageNumber, int size) {
+        // 페이지 번호와 페이지 크기를 사용하여 PageRequest 객체를 생성합니다.
+        PageRequest pageRequest = PageRequest.of(pageNumber, size);
+
+        Page<SnsAuthPost> fetchSnsAuthPosts = snsAuthPostRepository.findAll(pageRequest);
+
+        List<FetchSnsAuthPostsResponse.SnsAuthPostResponse> snsAuthPosts = fetchSnsAuthPosts.get()
+                .map(snsAuthPost -> FetchSnsAuthPostsResponse.SnsAuthPostResponse.builder()
+                        .id(snsAuthPost.getId())
+                        .title(snsAuthPost.getTitle())
+                        .contents(snsAuthPost.getContents())
+                        .createdAt(snsAuthPost.getCreatedAt())
+                        .updatedAt(snsAuthPost.getUpdatedAt())
+                        .build())
+                .toList();
+
+        return FetchSnsAuthPostsResponse.builder()
+                .snsAuthPosts(snsAuthPosts)
+                .currentPage(fetchSnsAuthPosts.getNumber())
+                .totalPages(fetchSnsAuthPosts.getTotalPages())
+                .totalElements(fetchSnsAuthPosts.getTotalElements())
                 .build();
     }
 }

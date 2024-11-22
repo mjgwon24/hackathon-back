@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tour_recommend.tour_recommend_back.dto.ResponseDto;
 import tour_recommend.tour_recommend_back.dto.ResponseDto.Status;
+import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.FetchSnsAuthPostsResponse;
 import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.FetchSnsAuthPostResponse;
 import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.CreateSnsAuthPostRequest;
 import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.CreateSnsAuthPostResponse;
@@ -35,6 +36,17 @@ public class SnsAuthPostApi {
 
         return new ResponseEntity<>(
                 new ResponseDto<>(Status.SUCCESS, "SNS 인증 게시글 조회 성공", fetchSnsAuthPostResponse),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/posts")
+    public ResponseEntity<ResponseDto<FetchSnsAuthPostsResponse>> fetchSnsAuthPosts(@RequestParam(defaultValue = "0") int pageNumber,
+                                                                                                   @RequestParam(defaultValue = "10") int size) {
+        FetchSnsAuthPostsResponse fetchSnsAuthPostsResponse = snsAuthPostService.fetchSnsAuthPosts(pageNumber, size);
+
+        return new ResponseEntity<>(
+                new ResponseDto<>(Status.SUCCESS, "SNS 인증 게시글 목록 조회 성공", fetchSnsAuthPostsResponse),
                 HttpStatus.OK
         );
     }
