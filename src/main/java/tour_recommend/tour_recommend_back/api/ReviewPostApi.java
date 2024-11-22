@@ -27,7 +27,7 @@ public class ReviewPostApi {
         );
     }
 
-    // 모든 후기 조회
+    // 모든 후기 조회 - 최신순 반환
     @GetMapping("/posts")
     public ResponseEntity<ResponseDto<List<ReviewPostResponse>>> getAllReviewPosts() {
         List<ReviewPostResponse> reviewDtos = reviewPostService.getAllReviewPosts();

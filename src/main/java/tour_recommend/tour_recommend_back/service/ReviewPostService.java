@@ -38,9 +38,9 @@ public class ReviewPostService {
                 .build();
     }
 
-    // 모든 후기 조회
+    // 모든 후기 조회 - createdAt 기준 최신순 반환
     public List<ReviewPostResponse> getAllReviewPosts() {
-        return reviewPostRepository.findAll().stream()
+        return reviewPostRepository.findAllByOrderByCreatedAtDesc().stream()
                 .map(reviewPost -> ReviewPostResponse.builder()
                         .id(reviewPost.getId())
                         .title(reviewPost.getTitle())
@@ -50,8 +50,7 @@ public class ReviewPostService {
                         .createAt(reviewPost.getCreatedAt())
                         .updateAt(reviewPost.getUpdatedAt())
                         .likeCount(reviewPost.getLikeCount())
-                        .build()
-                )
+                        .build())
                 .toList();
     }
 }
