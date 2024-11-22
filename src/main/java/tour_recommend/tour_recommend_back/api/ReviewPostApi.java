@@ -27,6 +27,16 @@ public class ReviewPostApi {
         );
     }
 
+    // 후기 단건 조회
+    @GetMapping("/posts/{postId}")
+    public ResponseEntity<ResponseDto<ReviewPostResponse>> getReviewPost(@PathVariable("postId") Long postId) {
+        ReviewPostResponse reviewPostResponse = reviewPostService.getReviewPost(postId);
+
+        return ResponseEntity.ok(
+                new ResponseDto<>(Status.SUCCESS, "후기 조회 성공", reviewPostResponse)
+        );
+    }
+
     // 모든 후기 조회 - 최신순 반환
     @GetMapping("/posts")
     public ResponseEntity<ResponseDto<List<ReviewPostResponse>>> getAllReviewPosts() {
