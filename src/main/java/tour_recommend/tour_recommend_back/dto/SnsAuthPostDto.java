@@ -42,4 +42,17 @@ public record SnsAuthPostDto () {
             LocalDateTime createAt,
             LocalDateTime updateAt
     ) {}
+
+    @Builder
+    public record FetchSnsAuthPostResponse(
+            Long id,
+            String snsUserName,
+            String phoneNumber,
+            String email,
+            String title,
+            String contents,
+            List<String> imagePathList,
+            LocalDateTime createAt,
+            LocalDateTime updateAt
+    ) {}
 }
