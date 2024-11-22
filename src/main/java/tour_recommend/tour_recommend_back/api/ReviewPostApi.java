@@ -46,4 +46,22 @@ public class ReviewPostApi {
                 new ResponseDto<>(Status.SUCCESS, "모든 후기 조회 성공", reviewDtos)
         );
     }
+
+    // 카테고리별 후기 조회 - 최신순 반환 & 페이지네이션
+    @GetMapping("/posts/category/{category}")
+    public ResponseEntity<ResponseDto<List<ReviewPostResponse>>> getReviewPostsByCategory(@PathVariable("category") String category,
+                                                                                          @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
+                                                                                          @RequestParam(name = "size", defaultValue = "10") int size) {
+        // 카테고리별 조회 (최신순)
+        List<ReviewPostResponse> reviewDtos = reviewPostService.getReviewPostsByCategory(category);
+
+        // 페이지네이션
+        int start = pageNumber * size;
+        int end = Math.min(start + size, reviewDtos.size());
+        reviewDtos = reviewDtos.subList(start, end);
+
+        return ResponseEntity.ok(
+                new ResponseDto<>(Status.SUCCESS, "카테고리별 후기 조회 성공", reviewDtos)
+        );
+    }
 }

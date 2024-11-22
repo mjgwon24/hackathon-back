@@ -70,4 +70,21 @@ public class ReviewPostService {
                         .build())
                 .toList();
     }
+
+    // 카테고리 별 조회 (최신순)
+    public List<ReviewPostResponse> getReviewPostsByCategory(String category) {
+        return reviewPostRepository.findAllByCategoryOrderByCreatedAtDesc(category).stream()
+                .map(reviewPost -> ReviewPostResponse.builder()
+                        .id(reviewPost.getId())
+                        .title(reviewPost.getTitle())
+                        .category(reviewPost.getCategory())
+                        .contents(reviewPost.getContents())
+                        .imagePathList(reviewPost.getImagePathList())
+                        .createAt(reviewPost.getCreatedAt())
+                        .updateAt(reviewPost.getUpdatedAt())
+                        .likeCount(reviewPost.getLikeCount())
+                        .build())
+                .toList();
+    }
+
 }
