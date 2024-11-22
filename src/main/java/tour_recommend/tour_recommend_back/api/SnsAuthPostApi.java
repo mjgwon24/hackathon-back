@@ -3,12 +3,10 @@ package tour_recommend.tour_recommend_back.api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tour_recommend.tour_recommend_back.dto.ResponseDto;
 import tour_recommend.tour_recommend_back.dto.ResponseDto.Status;
+import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.FetchSnsAuthPostResponse;
 import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.CreateSnsAuthPostRequest;
 import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.CreateSnsAuthPostResponse;
 import tour_recommend.tour_recommend_back.service.SnsAuthPostService;
@@ -26,6 +24,17 @@ public class SnsAuthPostApi {
 
         return new ResponseEntity<>(
                 new ResponseDto<>(Status.SUCCESS, "SNS 인증 게시글 등록 성공", createSnsAuthPostResponse),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/posts/{postId}")
+    public ResponseEntity<ResponseDto<FetchSnsAuthPostResponse>> fetchSnsAuthPost(@PathVariable Long postId) {
+
+        FetchSnsAuthPostResponse fetchSnsAuthPostResponse = snsAuthPostService.fetchSnsAuthPost(postId);
+
+        return new ResponseEntity<>(
+                new ResponseDto<>(Status.SUCCESS, "SNS 인증 게시글 조회 성공", fetchSnsAuthPostResponse),
                 HttpStatus.OK
         );
     }
