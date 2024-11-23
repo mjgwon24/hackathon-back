@@ -17,7 +17,7 @@ import java.io.IOException;
 public class ImageApi {
     private final ImageService imageService;
 
-    @PostMapping("/api/images")
+    @PostMapping("/images")
     public ResponseEntity<ResponseDto<?>> uploadImages(@RequestParam("files") MultipartFile[] files) {
         try {
             String[] filePaths = imageService.save(files);
