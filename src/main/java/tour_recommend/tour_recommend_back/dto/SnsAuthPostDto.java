@@ -9,6 +9,7 @@ import java.util.List;
 public record SnsAuthPostDto () {
     @Builder
     public record CreateSnsAuthPostRequest(
+            String postType,
             String snsUserName,
             String phoneNumber,
             String email,
@@ -18,6 +19,7 @@ public record SnsAuthPostDto () {
     ) {
         public SnsAuthPost toEntity() {
             return SnsAuthPost.builder()
+                    .postType(this.postType)
                     .snsUserName(this.snsUserName)
                     .phoneNumber(this.phoneNumber)
                     .email(this.email)
@@ -33,6 +35,7 @@ public record SnsAuthPostDto () {
     @Builder
     public record CreateSnsAuthPostResponse(
             Long id,
+            String postType,
             String snsUserName,
             String phoneNumber,
             String email,
@@ -46,6 +49,7 @@ public record SnsAuthPostDto () {
     @Builder
     public record FetchSnsAuthPostResponse(
             Long id,
+            String postType,
             String snsUserName,
             String phoneNumber,
             String email,
@@ -66,6 +70,7 @@ public record SnsAuthPostDto () {
         @Builder
         public record FetchedSnsAuthPost(
             Long id,
+            String postType,
             String title,
             String contents,
             LocalDateTime createdAt,
