@@ -13,7 +13,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/review")
+@RequestMapping("/sale")
 public class SalePostApi {
     private final SalePostService salePostService;
 
@@ -28,9 +28,9 @@ public class SalePostApi {
     }
 
     // 판매 게시글 단건 조회
-    @GetMapping("/posts/{postId}")
-    public ResponseEntity<ResponseDto<SalePostResponse>> getSalePost(@PathVariable("postId") Long postId) {
-        SalePostResponse salePostResponse = salePostService.getSalePost(postId);
+    @GetMapping("/posts/{salePostId}")
+    public ResponseEntity<ResponseDto<SalePostResponse>> getSalePost(@PathVariable("salePostId") Long salePostId) {
+        SalePostResponse salePostResponse = salePostService.getSalePost(salePostId);
 
         return ResponseEntity.ok(
                 new ResponseDto<>(Status.SUCCESS, "판매 게시글 조회 성공", salePostResponse)

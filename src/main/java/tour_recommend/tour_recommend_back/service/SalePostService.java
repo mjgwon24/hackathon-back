@@ -19,7 +19,11 @@ public class SalePostService {
         SalePost salePost = CreateSalePostRequest.builder()
                 .name(createSalePostRequest.name())
                 .category(createSalePostRequest.category())
-                .description(createSalePostRequest.description())
+                .shortDescription(createSalePostRequest.shortDescription())
+                .detailedDescription(createSalePostRequest.detailedDescription())
+                .price(createSalePostRequest.price())
+                .sellerName(createSalePostRequest.sellerName())
+                .rating(createSalePostRequest.rating())
                 .imagePathList(createSalePostRequest.imagePathList())
                 .build()
                 .toEntity();
@@ -30,28 +34,34 @@ public class SalePostService {
                 .id(salePostPs.getId())
                 .name(salePostPs.getName())
                 .category(salePostPs.getCategory())
-                .description(salePostPs.getDescription())
+                .shortDescription(salePostPs.getShortDescription())
+                .detailedDescription(salePostPs.getDetailedDescription())
+                .price(salePostPs.getPrice())
+                .sellerName(salePostPs.getSellerName())
+                .rating(salePostPs.getRating())
                 .imagePathList(salePostPs.getImagePathList())
                 .createAt(salePostPs.getCreatedAt())
                 .updateAt(salePostPs.getUpdatedAt())
-                .likeCount(salePostPs.getLikeCount())
                 .build();
     }
 
     // 판매 게시글 조회
-    public SalePostResponse getSalePost(Long postId) {
-        SalePost salePostPs = salePostRepository.findById(postId)
+    public SalePostResponse getSalePost(Long salePostId) {
+        SalePost salePostPs = salePostRepository.findById(salePostId)
                 .orElseThrow(() -> new RuntimeException("postId에 해당하는 후기 게시글이 존재하지 않습니다."));
 
         return SalePostResponse.builder()
                 .id(salePostPs.getId())
                 .name(salePostPs.getName())
                 .category(salePostPs.getCategory())
-                .description(salePostPs.getDescription())
+                .shortDescription(salePostPs.getShortDescription())
+                .detailedDescription(salePostPs.getDetailedDescription())
+                .price(salePostPs.getPrice())
+                .sellerName(salePostPs.getSellerName())
+                .rating(salePostPs.getRating())
                 .imagePathList(salePostPs.getImagePathList())
                 .createAt(salePostPs.getCreatedAt())
                 .updateAt(salePostPs.getUpdatedAt())
-                .likeCount(salePostPs.getLikeCount())
                 .build();
     }
 
@@ -62,11 +72,14 @@ public class SalePostService {
                         .id(salePost.getId())
                         .name(salePost.getName())
                         .category(salePost.getCategory())
-                        .description(salePost.getDescription())
+                        .shortDescription(salePost.getShortDescription())
+                        .detailedDescription(salePost.getDetailedDescription())
+                        .price(salePost.getPrice())
+                        .sellerName(salePost.getSellerName())
+                        .rating(salePost.getRating())
                         .imagePathList(salePost.getImagePathList())
                         .createAt(salePost.getCreatedAt())
                         .updateAt(salePost.getUpdatedAt())
-                        .likeCount(salePost.getLikeCount())
                         .build())
                 .toList();
     }
@@ -78,11 +91,14 @@ public class SalePostService {
                         .id(salePost.getId())
                         .name(salePost.getName())
                         .category(salePost.getCategory())
-                        .description(salePost.getDescription())
+                        .shortDescription(salePost.getShortDescription())
+                        .detailedDescription(salePost.getDetailedDescription())
+                        .price(salePost.getPrice())
+                        .sellerName(salePost.getSellerName())
+                        .rating(salePost.getRating())
                         .imagePathList(salePost.getImagePathList())
                         .createAt(salePost.getCreatedAt())
                         .updateAt(salePost.getUpdatedAt())
-                        .likeCount(salePost.getLikeCount())
                         .build())
                 .toList();
     }

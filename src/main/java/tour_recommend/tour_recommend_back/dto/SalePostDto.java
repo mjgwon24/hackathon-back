@@ -11,18 +11,25 @@ public record SalePostDto() {
     public record CreateSalePostRequest(
             String name,
             String category,
-            String description,
+            String shortDescription,
+            String detailedDescription,
+            Double price,
+            String sellerName,
+            int rating,
             List<String> imagePathList
     ) {
         public SalePost toEntity() {
             return SalePost.builder()
                     .name(this.name)
                     .category(this.category)
-                    .description(this.description)
+                    .shortDescription(this.shortDescription)
+                    .detailedDescription(this.detailedDescription)
+                    .price(this.price)
+                    .sellerName(this.sellerName)
+                    .rating(this.rating)
                     .imagePathList(this.imagePathList)
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
-                    .likeCount(0)
                     .build();
         }
     }
@@ -32,10 +39,13 @@ public record SalePostDto() {
             Long id,
             String name,
             String category,
-            String description,
+            String shortDescription,
+            String detailedDescription,
+            Double price,
+            String sellerName,
+            int rating,
             List<String> imagePathList,
             LocalDateTime createAt,
-            LocalDateTime updateAt,
-            int likeCount
+            LocalDateTime updateAt
     ) {}
 }
