@@ -1,24 +1,24 @@
 package tour_recommend.tour_recommend_back.dto;
 
 import lombok.Builder;
-import tour_recommend.tour_recommend_back.entity.ReviewPost;
+import tour_recommend.tour_recommend_back.entity.SalePost;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record ReviewPostDto() {
+public record SalePostDto() {
     @Builder
-    public record CreateReviewPostRequest(
-            String title,
+    public record CreateSalePostRequest(
+            String name,
             String category,
-            String contents,
+            String description,
             List<String> imagePathList
     ) {
-        public ReviewPost toEntity() {
-            return ReviewPost.builder()
-                    .title(this.title)
+        public SalePost toEntity() {
+            return SalePost.builder()
+                    .name(this.name)
                     .category(this.category)
-                    .contents(this.contents)
+                    .description(this.description)
                     .imagePathList(this.imagePathList)
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
@@ -28,11 +28,11 @@ public record ReviewPostDto() {
     }
 
     @Builder
-    public record ReviewPostResponse(
+    public record SalePostResponse(
             Long id,
-            String title,
+            String name,
             String category,
-            String contents,
+            String description,
             List<String> imagePathList,
             LocalDateTime createAt,
             LocalDateTime updateAt,
