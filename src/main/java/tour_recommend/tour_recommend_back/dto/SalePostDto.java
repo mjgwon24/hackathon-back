@@ -48,4 +48,46 @@ public record SalePostDto() {
             LocalDateTime createAt,
             LocalDateTime updateAt
     ) {}
+
+    @Builder
+    public record FetchSalePostsResponse(
+        List<FetchedSalePost> salePosts,
+        int currentPage,
+        int totalPages,
+        Long totalElements
+    ) {
+        @Builder
+        public record FetchedSalePost(
+                Long id,
+                String name,
+                String category,
+                String shortDescription,
+                Double price,
+                String sellerName,
+                int rating,
+                LocalDateTime createAt,
+                LocalDateTime updateAt
+        ) {}
+    }
+
+    @Builder
+    public record FetchSalePostsByCategoryResponse(
+            List<FetchedSalePostByCategory> salePostsByCategory,
+            int currentPage,
+            int totalPages,
+            Long totalElements
+    ) {
+        @Builder
+        public record FetchedSalePostByCategory(
+                Long id,
+                String name,
+                String category,
+                String shortDescription,
+                Double price,
+                String sellerName,
+                int rating,
+                LocalDateTime createAt,
+                LocalDateTime updateAt
+        ) {}
+    }
 }
