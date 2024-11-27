@@ -20,7 +20,6 @@ public record accommodationDto() {
         public record FetchedRoom(
                 Long id,
                 String roomType
-                // 필요한 다른 필드 추가 가능
         ) {}
         @Builder
         public record FetchedReservation(
@@ -29,7 +28,6 @@ public record accommodationDto() {
                 LocalDateTime checkInDate,
                 LocalDateTime checkOutDate,
                 Double totalPrice
-
         ) {}
     }
 
