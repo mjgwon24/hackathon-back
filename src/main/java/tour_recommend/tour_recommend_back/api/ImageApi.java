@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import tour_recommend.tour_recommend_back.dto.ResponseDto;
+import tour_recommend.tour_recommend_back.dto.common.ResponseDto;
 import tour_recommend.tour_recommend_back.service.ImageService;
 
 import java.io.IOException;

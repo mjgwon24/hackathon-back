@@ -5,12 +5,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.FetchSnsAuthPostsResponse.FetchedSnsAuthPost;
-import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.FetchSnsAuthPostsResponse;
-import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.FetchSnsAuthPostResponse;
-import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.CreateSnsAuthPostRequest;
-import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.CreateSnsAuthPostResponse;
-import tour_recommend.tour_recommend_back.entity.SnsAuthPost;
+import tour_recommend.tour_recommend_back.dto.post.SnsAuthPostDto.FetchSnsAuthPostsResponse.FetchedSnsAuthPost;
+import tour_recommend.tour_recommend_back.dto.post.SnsAuthPostDto.FetchSnsAuthPostsResponse;
+import tour_recommend.tour_recommend_back.dto.post.SnsAuthPostDto.FetchSnsAuthPostResponse;
+import tour_recommend.tour_recommend_back.dto.post.SnsAuthPostDto.CreateSnsAuthPostRequest;
+import tour_recommend.tour_recommend_back.dto.post.SnsAuthPostDto.CreateSnsAuthPostResponse;
+import tour_recommend.tour_recommend_back.entity.post.SnsAuthPost;
 import tour_recommend.tour_recommend_back.repository.SnsAuthPostRepository;
 
 import java.util.List;

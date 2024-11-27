@@ -1,4 +1,4 @@
-package tour_recommend.tour_recommend_back.dto;
+package tour_recommend.tour_recommend_back.dto.common;
 
 public record ResponseDto<T>(
         Status status,
