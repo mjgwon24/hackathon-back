@@ -22,6 +22,7 @@ public class SnsAuthPostService {
 
     public CreateSnsAuthPostResponse createSnsAuthPost(CreateSnsAuthPostRequest createSnsAuthPostRequest) {
         SnsAuthPost snsAuthPost = CreateSnsAuthPostRequest.builder()
+                .postType(createSnsAuthPostRequest.postType())
                 .snsUserName(createSnsAuthPostRequest.snsUserName())
                 .phoneNumber(createSnsAuthPostRequest.phoneNumber())
                 .email(createSnsAuthPostRequest.email())
@@ -35,6 +36,7 @@ public class SnsAuthPostService {
 
         return CreateSnsAuthPostResponse.builder()
                 .id(snsAuthPostPs.getId())
+                .postType(snsAuthPostPs.getPostType())
                 .snsUserName(snsAuthPostPs.getSnsUserName())
                 .phoneNumber(snsAuthPostPs.getPhoneNumber())
                 .email(snsAuthPostPs.getEmail())
@@ -52,6 +54,7 @@ public class SnsAuthPostService {
 
         return FetchSnsAuthPostResponse.builder()
                 .id(snsAuthPostPs.getId())
+                .postType(snsAuthPostPs.getPostType())
                 .snsUserName(snsAuthPostPs.getSnsUserName())
                 .phoneNumber(snsAuthPostPs.getPhoneNumber())
                 .email(snsAuthPostPs.getEmail())
@@ -75,6 +78,7 @@ public class SnsAuthPostService {
         List<FetchedSnsAuthPost> snsAuthPosts = fetchSnsAuthPosts.get()
                 .map(snsAuthPost -> FetchedSnsAuthPost.builder()
                         .id(snsAuthPost.getId())
+                        .postType(snsAuthPost.getPostType())
                         .title(snsAuthPost.getTitle())
                         .contents(snsAuthPost.getContents())
                         .createdAt(snsAuthPost.getCreatedAt())

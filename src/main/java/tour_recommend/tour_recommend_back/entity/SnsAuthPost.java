@@ -21,6 +21,10 @@ public class SnsAuthPost {
     @Column(name = "sns_auth_post_id")
     private Long id;
 
+    // 숙소 방문 인증(ACCOMMODATION_VISIT) OR 쓰레기 처리 인증(WASTE_DISPOSAL)
+    @Column(nullable = false)
+    private String postType;
+
     @Column(nullable = false)
     private String snsUserName;
 

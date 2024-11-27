@@ -13,30 +13,39 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="review_post")
+@Table(name="sale_post")
 @Entity
-public class ReviewPost {
+public class SalePost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "review_post_id")
+    @Column(name = "sale_post_id")
     private Long id;
 
     @Column(nullable = false)
-    private String title;
+    private String name;
 
     @Column(nullable = false)
-    private String category;
+    private String category;  // VEGETABLES, FRUITS, MEAT, MEAL_KIT
 
     @Column(nullable = false)
-    private String contents;
+    private String shortDescription; // 재료 간단 설명
+
+    @Column(nullable = false)
+    private String detailedDescription; // 재료 상세 설명
+
+    @Column(nullable = false)
+    private Double price; // 가격
+
+    @Column(nullable = false)
+    private String sellerName; // 판매자 이름
 
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 
-    private int likeCount;
+    private int rating;
 
     @ElementCollection
-    @CollectionTable(name = "review_post_images", joinColumns = @JoinColumn(name = "review_post_id"))
+    @CollectionTable(name = "sale_post_images", joinColumns = @JoinColumn(name = "sale_post_id"))
     private List<String> imagePathList;
 }
