@@ -30,7 +30,7 @@ public class SnsAuthPostApi {
     }
 
     @GetMapping("/posts/{postId}")
-    public ResponseEntity<ResponseDto<FetchSnsAuthPostResponse>> fetchSnsAuthPost(@PathVariable Long postId) {
+    public ResponseEntity<ResponseDto<FetchSnsAuthPostResponse>> fetchSnsAuthPost(@PathVariable("postId") Long postId) {
 
         FetchSnsAuthPostResponse fetchSnsAuthPostResponse = snsAuthPostService.fetchSnsAuthPost(postId);
 

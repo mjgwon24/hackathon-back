@@ -1,5 +1,7 @@
 package tour_recommend.tour_recommend_back.entity.accommodation;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,9 +27,9 @@ public class Accommodation {
     private String description;
     private Double price;
 
-    @OneToMany(mappedBy = "accommodation")
+    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY)
     private List<Room> rooms; // 숙소에 속한 방들
 
-    @OneToMany(mappedBy = "accommodation")
+    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY)
     private List<Reservation> reservations;
 }
