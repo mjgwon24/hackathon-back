@@ -1,24 +1,85 @@
---숙소 생성 쿼리
-INSERT INTO `accommodation` (price, DESCRIPTION, location, NAME)
-VALUES (100000, '엄청 좋은 숙소입니다.', '경주시 ㅇㅇ동', 'A한옥');
+-- accommodation add query
+INSERT INTO accommodation (accommodation_id, name, location, description, price, rating, thumbnail_path)
+VALUES
+    (1, '오소한옥', '경상북도 경주시 남산예길 99-4 (남산동)', '- 인원 : 기준 2명 / 최대 4명\n- 기준인원 초과 시 1인당 15,000원 추가됩니다.\n- 객실 정보: 원룸형 / 15평\n- 구비 시설: 침대, 에어컨, TV, 냉장고, 전자레인지, 화장지, 드라이기, 수저, 컵 , 접시', 75000, 4.3, '/images/accommodateThumbs/thumb1.png'),
+    (2, '한옥인', '경주시 포석로1050번길 19 (황남동)', '- 인원 : 기준 2명 / 최대 4명\n- 기준인원 초과 시 1인당 15,000원 추가됩니다.\n- 객실 정보: 원룸형 / 15평\n- 구비 시설: 침대, 에어컨, TV, 냉장고, 전자레인지, 화장지, 드라이기, 수저, 컵 , 접시', 68000, 4.2, '/images/accommodateThumbs/thumb2.png'),
+    (3, '휴휴당', '경주시 첨성로99번길 25-10', '- 인원 : 기준 2명 / 최대 4명\n- 기준인원 초과 시 1인당 15,000원 추가됩니다.\n- 객실 정보: 원룸형 / 15평\n- 구비 시설: 침대, 에어컨, TV, 냉장고, 전자레인지, 화장지, 드라이기, 수저, 컵 , 접시', 87000, 4.4, '/images/accommodateThumbs/thumb3.png'),
+    (4, '춘추관 한옥펜션', '경주시 대경로 4821-5', '- 인원 : 기준 2명 / 최대 4명\n- 기준인원 초과 시 1인당 15,000원 추가됩니다.\n- 객실 정보: 원룸형 / 15평\n- 구비 시설: 침대, 에어컨, TV, 냉장고, 전자레인지, 화장지, 드라이기, 수저, 컵 , 접시', 78000, 4.4, '/images/accommodateThumbs/thumb4.png'),
+    (5, '원화루', '경주시 포석로 828-21', '- 인원 : 기준 2명 / 최대 4명\n- 기준인원 초과 시 1인당 15,000원 추가됩니다.\n- 객실 정보: 원룸형 / 15평\n- 구비 시설: 침대, 에어컨, TV, 냉장고, 전자레인지, 화장지, 드라이기, 수저, 컵 , 접시', 81000, 4.2, '/images/accommodateThumbs/thumb5.png'),
+    (6, '아라뜰펜션', '경주시 감포로 10길 40-7', '- 인원 : 기준 2명 / 최대 4명\n- 기준인원 초과 시 1인당 15,000원 추가됩니다.\n- 객실 정보: 원룸형 / 15평\n- 구비 시설: 침대, 에어컨, TV, 냉장고, 전자레인지, 화장지, 드라이기, 수저, 컵 , 접시', 71000, 4.4, '/images/accommodateThumbs/thumb6.png'),
+    (7, '석굴암 한옥', '경주시 불국로 873-252', '- 인원 : 기준 2명 / 최대 4명\n- 기준인원 초과 시 1인당 15,000원 추가됩니다.\n- 객실 정보: 원룸형 / 15평\n- 구비 시설: 침대, 에어컨, TV, 냉장고, 전자레인지, 화장지, 드라이기, 수저, 컵 , 접시', 68000, 4.4, '/images/accommodateThumbs/thumb7.png'),
+    (8, '나들한옥', '경주시 쪽샘길 4-1 (인왕동 814-3)', '- 인원 : 기준 2명 / 최대 4명\n- 기준인원 초과 시 1인당 15,000원 추가됩니다.\n- 객실 정보: 원룸형 / 15평\n- 구비 시설: 침대, 에어컨, TV, 냉장고, 전자레인지, 화장지, 드라이기, 수저, 컵 , 접시', 81000, 4.2, '/images/accommodateThumbs/thumb8.png'),
+    (9, '천마한옥', '경주시 첨성로 81번길 22-11 (황남동)', '- 인원 : 기준 2명 / 최대 4명\n- 기준인원 초과 시 1인당 15,000원 추가됩니다.\n- 객실 정보: 원룸형 / 15평\n- 구비 시설: 침대, 에어컨, TV, 냉장고, 전자레인지, 화장지, 드라이기, 수저, 컵 , 접시', 68000, 4.3, '/images/accommodateThumbs/thumb9.png'),
+    (10, '경주 감포한옥펜션', '경주시 감포읍 감포리 139-2', '- 인원 : 기준 2명 / 최대 4명\n- 기준인원 초과 시 1인당 15,000원 추가됩니다.\n- 객실 정보: 원룸형 / 15평\n- 구비 시설: 침대, 에어컨, TV, 냉장고, 전자레인지, 화장지, 드라이기, 수저, 컵 , 접시', 71000, 4.4, '/images/accommodateThumbs/thumb10.png'),
+    (11, '시우와당', '경주시 첨성로 99번길 21 (황남동)', '- 인원 : 기준 2명 / 최대 4명\n- 기준인원 초과 시 1인당 15,000원 추가됩니다.\n- 객실 정보: 원룸형 / 15평\n- 구비 시설: 침대, 에어컨, TV, 냉장고, 전자레인지, 화장지, 드라이기, 수저, 컵 , 접시', 81000, 4.3, '/images/accommodateThumbs/thumb11.png'),
+    (12, '경주엔 한옥펜션', '경주시 충효서악길 83', '- 인원 : 기준 2명 / 최대 4명\n- 기준인원 초과 시 1인당 15,000원 추가됩니다.\n- 객실 정보: 원룸형 / 15평\n- 구비 시설: 침대, 에어컨, TV, 냉장고, 전자레인지, 화장지, 드라이기, 수저, 컵 , 접시', 75000, 4.2, '/images/accommodateThumbs/thumb12.png');
 
-INSERT INTO `accommodation` (price, DESCRIPTION, location, NAME)
-VALUES (100000, '전통적인 감성을 느낄수 있는 숙소입니다.', '경주시 ㅇㅇ동', 'B한옥');
+-- room add query
+INSERT INTO room (room_id, room_type, accommodation_id)
+VALUES
+    (1, '싱글', 1),
+    (2, '더블', 1),
+    (3, '싱글', 2),
+    (4, '더블', 2),
+    (5, '싱글', 3),
+    (6, '더블', 3),
+    (7, '더블', 4),
+    (8, '스위트', 4),
+    (9, '싱글', 5),
+    (10, '더블', 5),
+    (11, '싱글', 6),
+    (12, '더블', 6),
+    (13, '싱글', 7),
+    (14, '더블', 7),
+    (15, '더블', 8),
+    (16, '스위트', 8),
+    (17, '싱글', 9),
+    (18, '더블', 9),
+    (19, '싱글', 10),
+    (20, '더블', 10),
+    (21, '싱글', 11),
+    (22, '더블', 11),
+    (23, '더블', 12),
+    (24, '스위트', 12);
 
--- room 생성 쿼리(room_availability 사용 O)
-INSERT INTO room (accommodation_id, room_type)
-VALUES (1, '싱글룸');
+-- room_availability add query (숙소1: 7개, 숙소2: 6개, 숙소3: 6개, 숙소4: 6개, 숙소5: 5개, 숙소6: 5개, 숙소7: 6개, 숙소8: 6개, 숙소9: 6개, 숙소10: 6개, 숙소11: 6개, 숙소12: 6개)
+INSERT INTO room_availability (availability_id, available_count, total_count, date, room_id)
+values
+    (1, 3, 3, '2024-11-27', 1),
+    (2, 4, 4, '2024-11-27', 2),
+    (3, 3, 3, '2024-11-27', 3),
+    (4, 3, 3, '2024-11-27', 4),
+    (5, 3, 3, '2024-11-27', 5),
+    (6, 3, 3, '2024-11-27', 6),
+    (7, 3, 3, '2024-11-27', 7),
+    (8, 3, 3, '2024-11-27', 8),
+    (9, 3, 3, '2024-11-27', 9),
+    (10, 2, 2, '2024-11-27', 10),
+    (11, 3, 3, '2024-11-27', 11),
+    (12, 2, 2, '2024-11-27', 12),
+    (13, 3, 3, '2024-11-27', 13),
+    (14, 3, 3, '2024-11-27', 14),
+    (15, 3, 3, '2024-11-27', 15),
+    (16, 3, 3, '2024-11-27', 16),
+    (17, 3, 3, '2024-11-27', 17),
+    (18, 3, 3, '2024-11-27', 18),
+    (19, 3, 3, '2024-11-27', 19),
+    (20, 3, 3, '2024-11-27', 20),
+    (21, 3, 3, '2024-11-27', 21),
+    (22, 3, 3, '2024-11-27', 22),
+    (23, 3, 3, '2024-11-27', 23),
+    (24, 3, 3, '2024-11-27', 24);
 
-INSERT INTO room (accommodation_id, room_type)
-VALUES (1, '더블룸');
-
--- room_availability 생성 쿼리
-INSERT INTO `room_availability` (available_count, total_count, DATE, room_id)
-VALUES (5, 5, '2024-11-24', 1);
-
-INSERT INTO `room_availability` (available_count, total_count, DATE, room_id)
-VALUES (5, 5, '2024-11-24', 2);
-
--- 방 예약 쿼리
-INSERT INTO reservations (phone_number, total_price, accommodation_id, check_in_date, check_out_date, room_id)
-VALUES ("010-1234-1234", 10000, 1, '2024-11-24', '2024-11-24', 1);
+-- reservation add query
+-- INSERT INTO reservations (reservations_id, phone_number, total_price, accommodation_id, check_in_date, check_out_date, room_id)
+-- values
+--     (1, '010-1234-5678', 75000, 1, '2024-11-27', '2024-11-28', 1),
+--     (2, '010-1234-5678', 68000, 2, '2024-11-27', '2024-11-28', 8),
+--     (3, '010-1234-5678', 87000, 3, '2024-11-27', '2024-11-28', 15),
+--     (4, '010-1234-5678', 78000, 4, '2024-11-27', '2024-11-28', 22);
+--
+-- -- 방 예약에 따른 room_availability 감소 update query
+-- update room_availability set available_count = available_count - 1 where room_id = 1 and date = '2024-11-27';
+-- update room_availability set available_count = available_count - 1 where room_id = 8 and date = '2024-11-27';
+-- update room_availability set available_count = available_count - 1 where room_id = 15 and date = '2024-11-27';
+-- update room_availability set available_count = available_count - 1 where room_id = 22 and date = '2024-11-27';
