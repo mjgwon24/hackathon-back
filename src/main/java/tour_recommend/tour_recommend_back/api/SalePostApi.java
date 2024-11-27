@@ -4,15 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tour_recommend.tour_recommend_back.dto.ResponseDto;
-import tour_recommend.tour_recommend_back.dto.ResponseDto.Status;
-import tour_recommend.tour_recommend_back.dto.SalePostDto.FetchSalePostsByCategoryResponse;
-import tour_recommend.tour_recommend_back.dto.SalePostDto.FetchSalePostsResponse;
-import tour_recommend.tour_recommend_back.dto.SalePostDto.CreateSalePostRequest;
-import tour_recommend.tour_recommend_back.dto.SalePostDto.SalePostResponse;
+import tour_recommend.tour_recommend_back.dto.common.ResponseDto;
+import tour_recommend.tour_recommend_back.dto.common.ResponseDto.Status;
+import tour_recommend.tour_recommend_back.dto.post.SalePostDto.FetchSalePostsByCategoryResponse;
+import tour_recommend.tour_recommend_back.dto.post.SalePostDto.FetchSalePostsResponse;
+import tour_recommend.tour_recommend_back.dto.post.SalePostDto.CreateSalePostRequest;
+import tour_recommend.tour_recommend_back.dto.post.SalePostDto.SalePostResponse;
 import tour_recommend.tour_recommend_back.service.SalePostService;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController

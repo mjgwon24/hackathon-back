@@ -3,7 +3,7 @@ package tour_recommend.tour_recommend_back.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import tour_recommend.tour_recommend_back.entity.Image;
+import tour_recommend.tour_recommend_back.entity.image.Image;
 import tour_recommend.tour_recommend_back.repository.ImageRepository;
 
 import java.io.File;

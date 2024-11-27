@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tour_recommend.tour_recommend_back.dto.ResponseDto;
-import tour_recommend.tour_recommend_back.dto.ResponseDto.Status;
-import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.FetchSnsAuthPostsResponse;
-import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.FetchSnsAuthPostResponse;
-import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.CreateSnsAuthPostRequest;
-import tour_recommend.tour_recommend_back.dto.SnsAuthPostDto.CreateSnsAuthPostResponse;
+import tour_recommend.tour_recommend_back.dto.common.ResponseDto;
+import tour_recommend.tour_recommend_back.dto.common.ResponseDto.Status;
+import tour_recommend.tour_recommend_back.dto.post.SnsAuthPostDto.FetchSnsAuthPostsResponse;
+import tour_recommend.tour_recommend_back.dto.post.SnsAuthPostDto.FetchSnsAuthPostResponse;
+import tour_recommend.tour_recommend_back.dto.post.SnsAuthPostDto.CreateSnsAuthPostRequest;
+import tour_recommend.tour_recommend_back.dto.post.SnsAuthPostDto.CreateSnsAuthPostResponse;
 import tour_recommend.tour_recommend_back.service.SnsAuthPostService;
 
 @RequiredArgsConstructor
