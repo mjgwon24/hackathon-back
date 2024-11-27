@@ -25,9 +25,9 @@ public class Accommodation {
     private String description;
     private Double price;
 
-    @OneToMany(mappedBy = "accommodation")
+    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY)
     private List<Room> rooms; // 숙소에 속한 방들
 
-    @OneToMany(mappedBy = "accommodation")
+    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY)
     private List<Reservation> reservations;
 }

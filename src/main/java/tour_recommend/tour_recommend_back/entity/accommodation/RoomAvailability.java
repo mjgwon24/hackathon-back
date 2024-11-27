@@ -20,10 +20,6 @@ public class RoomAvailability {
     @Column(name = "availability_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id")
-    private Room room;
-
     private LocalDate date; // 특정 날짜
 
     @Column(nullable = false)
@@ -31,4 +27,8 @@ public class RoomAvailability {
 
     @Column(nullable = false)
     private int totalCount; // 해당 날짜에 총 방의 수(예약된 방 포함)
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    private Room room;
 }
