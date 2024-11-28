@@ -47,6 +47,8 @@ public class ReservationService {
                 .location(fetchedAccommodation.getLocation())
                 .description(fetchedAccommodation.getDescription())
                 .price(fetchedAccommodation.getPrice())
+                .rating(fetchedAccommodation.getRating())
+                .thumbnailPath(fetchedAccommodation.getThumbnailPath())
                 .rooms(rooms)
                 .reservations(reservations)
                 .build();
