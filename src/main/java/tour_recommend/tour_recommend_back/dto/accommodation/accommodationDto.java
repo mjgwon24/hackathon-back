@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record accommodationDto() {
-    // 숙소 생성 요청
+    // 숙소 조회 응답
     @Builder
     public record FetchAccommodationResponse(
             Long id,
@@ -14,6 +14,8 @@ public record accommodationDto() {
             String location,
             String description,
             Double price,
+            Double rating,
+            String thumbnailPath,
             List<FetchedRoom> rooms,
             List<FetchedReservation> reservations
     ) {
