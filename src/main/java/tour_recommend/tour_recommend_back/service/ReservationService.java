@@ -1,10 +1,13 @@
 package tour_recommend.tour_recommend_back.service;
 
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.FetchAccommodationsResponse;
 import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.FetchAccommodationsResponse.FetchedAccommodation;
 import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.FetchAccommodationResponse.FetchedReservation;
@@ -14,23 +17,29 @@ import tour_recommend.tour_recommend_back.dto.campsite.CampsiteDto.FetchCampsite
 import tour_recommend.tour_recommend_back.dto.campsite.CampsiteDto.FetchCampsitesResponse;
 import tour_recommend.tour_recommend_back.dto.campsite.CampsiteDto.FetchCampsiteResponse;
 import tour_recommend.tour_recommend_back.entity.accommodation.Accommodation;
+import tour_recommend.tour_recommend_back.entity.accommodation.AccommodationReservation;
 import tour_recommend.tour_recommend_back.entity.accommodation.Room;
 import tour_recommend.tour_recommend_back.entity.accommodation.RoomAvailability;
 import tour_recommend.tour_recommend_back.entity.campsite.Campsite;
 import tour_recommend.tour_recommend_back.entity.campsite.CampsiteAvailability;
-import tour_recommend.tour_recommend_back.repository.AccommodationRepository;
-import tour_recommend.tour_recommend_back.repository.CampsiteRepository;
+import tour_recommend.tour_recommend_back.entity.campsite.CampsiteReservation;
+import tour_recommend.tour_recommend_back.repository.*;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ReservationService {
     private final AccommodationRepository accommodationRepository;
     private final CampsiteRepository campsiteRepository;
+    private final RoomAvailabilityRepository roomAvailabilityRepository;
+    private final AccommodationReservationRepository accommodationReservationRepository;
+    private final CampsiteAvailabilityRepository campsiteAvailabilityRepository;
+    private final CampsiteReservationRepository campsiteReservationRepository;
 
     // 숙소 조회
     public FetchAccommodationResponse fetchAccommodation(Long accommodationId) {
@@ -152,6 +161,55 @@ public class ReservationService {
         }
     }
 
+    // 숙소 예약
+    @Transactional
+    public void reserveAccommodation(Long accommodationId, String phoneNumber, Double totalPrice, LocalDate checkInDate, LocalDate checkOutDate) {
+        // 숙소 조회
+        Accommodation fetchedAccommodation = accommodationRepository.findById(accommodationId)
+                .orElseThrow(() -> new RuntimeException("accommodationId에 해당하는 숙소가 존재하지 않습니다."));
+
+        // Room 조회 - Room 리스트를 순회하며 예약 가능한 Room을 찾음
+        Room rooms = fetchedAccommodation.getRooms().stream()
+                .filter(room -> room.getAvailabilities().stream()
+                        .anyMatch(roomAvailability -> roomAvailability.getDate().isEqual(checkInDate.minusDays(1))
+                                && roomAvailability.getAvailableCount() > 0))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("예약 가능한 방이 없습니다."));
+
+        // RoomAvailability 조회 및 필터링 (체크인 날짜와 체크아웃-1 날짜 사이의 RoomAvailability만 필터링)
+        List<RoomAvailability> filteredRoomAvailabilities = rooms.getAvailabilities().stream()
+                .filter(roomAvailability -> roomAvailability.getDate().isAfter(checkInDate.minusDays(1)))
+                .filter(roomAvailability -> roomAvailability.getDate().isBefore(checkOutDate))
+                .toList();
+
+        // 필터링된 RoomAvailability가 없을 경우, 예약 가능한 방 수가 없다고 판단, 예외 발생
+        if (filteredRoomAvailabilities.isEmpty()) {
+            log.info("예약 가능한 방이 없습니다.");
+            throw new RuntimeException("예약 가능한 방이 없습니다.");
+        }
+
+        // AccommodationReservation 생성 - checkInDate와 checkOutDate - 1 사이 날짜를 모두 생성
+        for (LocalDate date = checkInDate; date.isBefore(checkOutDate); date = date.plusDays(1)) {
+            AccommodationReservation accommodationReservation = AccommodationReservation.builder()
+                    .phoneNumber(phoneNumber)
+                    .checkInDate(date.atStartOfDay())
+                    .checkOutDate(checkOutDate.atStartOfDay())
+                    .totalPrice(totalPrice)
+                    .room(rooms)
+                    .accommodation(fetchedAccommodation)
+                    .build();
+
+            // AccommodationReservation 저장
+            accommodationReservationRepository.save(accommodationReservation);
+        }
+
+        // filteredRoomAvailabilities 리스트를 순회하며 availableCount를 1 감소
+        for (RoomAvailability roomAvailability : filteredRoomAvailabilities) {
+            log.info("roomAvailability: {}", roomAvailability);
+            roomAvailabilityRepository.decreaseAvailableCountByRoomIdAndDate(roomAvailability.getRoom().getId(), roomAvailability.getDate());
+        }
+    }
+
     // 캠핑장 조회
     public FetchCampsiteResponse fetchCampsite(Long campsiteId) {
         Campsite fetchedCampsite = campsiteRepository.findById(campsiteId)
@@ -244,6 +302,44 @@ public class ReservationService {
             // 예외 발생 시, 0 반환
             System.err.println(e.getMessage());
             return 0;
+        }
+    }
+
+    // 캠핑장 예약
+    @Transactional
+    public void reserveCampsite(Long campsiteId, String phoneNumber, Double totalPrice, LocalDate checkInDate, LocalDate checkOutDate) {
+        // 캠핑장 조회
+        Campsite fetchedCampsite = campsiteRepository.findById(campsiteId)
+                .orElseThrow(() -> new RuntimeException("campsiteId에 해당하는 캠핑장이 존재하지 않습니다."));
+
+        // CampsiteAvailability 조회 및 필터링 (체크인 날짜와 체크아웃-1 날짜 사이의 CampsiteAvailability만 필터링)
+        List<CampsiteAvailability> filteredCampsiteAvailabilities = fetchedCampsite.getAvailabilities().stream()
+                .filter(campsiteAvailability -> campsiteAvailability.getDate().isAfter(checkInDate.minusDays(1)))
+                .filter(campsiteAvailability -> campsiteAvailability.getDate().isBefore(checkOutDate))
+                .toList();
+
+        // 필터링된 CampsiteAvailability가 없을 경우, 예약 가능한 방 수가 없다고 판단, 예외 발생
+        if (filteredCampsiteAvailabilities.isEmpty()) {
+            throw new RuntimeException("예약 가능한 방이 없습니다.");
+        }
+
+        // CampsiteReservation 생성 - checkInDate와 checkOutDate - 1 사이 날짜를 모두 생성
+        for (LocalDate date = checkInDate; date.isBefore(checkOutDate); date = date.plusDays(1)) {
+            CampsiteReservation campsiteReservation = CampsiteReservation.builder()
+                    .phoneNumber(phoneNumber)
+                    .checkInDate(date.atStartOfDay())
+                    .checkOutDate(checkOutDate.atStartOfDay())
+                    .totalPrice(totalPrice)
+                    .campsite(fetchedCampsite)
+                    .build();
+
+            // CampsiteReservation 저장
+            campsiteReservationRepository.save(campsiteReservation);
+        }
+
+        // filteredCampsiteAvailabilities 리스트를 순회하며 availableCount를 1 감소
+        for (CampsiteAvailability campsiteAvailability : filteredCampsiteAvailabilities) {
+            campsiteAvailabilityRepository.decreaseAvailableCountByCampsiteIdAndDate(campsiteAvailability.getCampsite().getId(), campsiteAvailability.getDate());
         }
     }
 }
