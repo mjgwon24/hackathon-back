@@ -3,6 +3,7 @@ package tour_recommend.tour_recommend_back.api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.FetchAccommodationsResponse;
 import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.FetchAccommodationResponse;
@@ -52,6 +53,27 @@ public class ReservationAPI {
         );
     }
 
+    // 숙소 예약
+    @Transactional
+    @PostMapping("/accommodations/{accommodationId}/reservations")
+    public ResponseEntity<ResponseDto<Long>> reserveAccommodation(@PathVariable("accommodationId") Long accommodationId,
+                                                                  @RequestParam("checkInDate") @DateTimeFormat(iso =  DateTimeFormat.ISO.DATE) LocalDate checkInDate,
+                                                                  @RequestParam("checkOutDate") @DateTimeFormat(iso =  DateTimeFormat.ISO.DATE) LocalDate checkOutDate,
+                                                                  @RequestParam("phoneNumber") String phoneNumber,
+                                                                  @RequestParam("totalPrice") Double totalPrice) {
+        try {
+            reservationService.reserveAccommodation(accommodationId, phoneNumber, totalPrice, checkInDate, checkOutDate);
+
+            return ResponseEntity.ok(
+                    new ResponseDto<>(ResponseDto.Status.SUCCESS, "숙소 예약 성공", null)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.ok(
+                    new ResponseDto<>(ResponseDto.Status.FAILURE, "숙소 예약 실패", null)
+            );
+        }
+    }
+
     // 캠핑장 조회
     @GetMapping("/campsites/{campsiteId}")
     public ResponseEntity<ResponseDto<FetchCampsiteResponse>> fetchCampsite(@PathVariable("campsiteId") Long campsiteId) {
@@ -78,11 +100,31 @@ public class ReservationAPI {
     public ResponseEntity<ResponseDto<Integer>> fetchCampsiteAvailableRooms(@PathVariable("campsiteId") Long campsiteId,
                                                                     @RequestParam("checkInDate") @DateTimeFormat(iso =  DateTimeFormat.ISO.DATE) LocalDate checkInDate,
                                                                     @RequestParam("checkOutDate") @DateTimeFormat(iso =  DateTimeFormat.ISO.DATE) LocalDate checkOutDate) {
-        int availableRooms = reservationService.fetchAvailableRooms(campsiteId, checkInDate, checkOutDate);
+        int availableRooms = reservationService.fetchAvailableCampsites(campsiteId, checkInDate, checkOutDate);
 
         return ResponseEntity.ok(
                 new ResponseDto<>(ResponseDto.Status.SUCCESS, "남은 방 수 조회 성공", availableRooms)
         );
+    }
+
+    // 캠핑장 예약
+    @PostMapping("/campsites/{campsiteId}/reservations")
+    public ResponseEntity<ResponseDto<Long>> reserveCampsite(@PathVariable("campsiteId") Long campsiteId,
+                                                                  @RequestParam("checkInDate") @DateTimeFormat(iso =  DateTimeFormat.ISO.DATE) LocalDate checkInDate,
+                                                                  @RequestParam("checkOutDate") @DateTimeFormat(iso =  DateTimeFormat.ISO.DATE) LocalDate checkOutDate,
+                                                                  @RequestParam("phoneNumber") String phoneNumber,
+                                                                  @RequestParam("totalPrice") Double totalPrice) {
+        try {
+            reservationService.reserveCampsite(campsiteId, phoneNumber, totalPrice, checkInDate, checkOutDate);
+
+            return ResponseEntity.ok(
+                    new ResponseDto<>(ResponseDto.Status.SUCCESS, "캠핑장 예약 성공", null)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.ok(
+                    new ResponseDto<>(ResponseDto.Status.FAILURE, "캠핑장 예약 실패", null)
+            );
+        }
     }
 
 }
