@@ -1,7 +1,7 @@
 package tour_recommend.tour_recommend_back.dto.post;
 
 import lombok.Builder;
-import tour_recommend.tour_recommend_back.entity.post.SnsAuthPost;
+import tour_recommend.tour_recommend_back.entity.sns_auth.SnsAuthPost;
 
 import java.time.LocalDateTime;
 import java.util.List;
