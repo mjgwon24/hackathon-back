@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="reservations")
+@Table(name="accommodation_reservation")
 @Entity
-public class Reservation {
+public class AccommodationReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reservations_id")
+    @Column(name = "accommodation_reservation_id")
     private Long id;
 
     private String phoneNumber;
