@@ -11,7 +11,7 @@ import tour_recommend.tour_recommend_back.dto.post.SalePostDto.FetchSalePostsByC
 import tour_recommend.tour_recommend_back.dto.post.SalePostDto.FetchSalePostsResponse;
 import tour_recommend.tour_recommend_back.dto.post.SalePostDto.CreateSalePostRequest;
 import tour_recommend.tour_recommend_back.dto.post.SalePostDto.SalePostResponse;
-import tour_recommend.tour_recommend_back.entity.post.SalePost;
+import tour_recommend.tour_recommend_back.entity.sale.SalePost;
 import tour_recommend.tour_recommend_back.repository.SalePostRepository;
 
 import java.util.List;

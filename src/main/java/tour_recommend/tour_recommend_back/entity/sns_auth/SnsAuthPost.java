@@ -1,4 +1,4 @@
-package tour_recommend.tour_recommend_back.entity.post;
+package tour_recommend.tour_recommend_back.entity.sns_auth;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

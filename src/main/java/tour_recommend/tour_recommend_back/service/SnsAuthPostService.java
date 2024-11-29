@@ -10,7 +10,7 @@ import tour_recommend.tour_recommend_back.dto.post.SnsAuthPostDto.FetchSnsAuthPo
 import tour_recommend.tour_recommend_back.dto.post.SnsAuthPostDto.FetchSnsAuthPostResponse;
 import tour_recommend.tour_recommend_back.dto.post.SnsAuthPostDto.CreateSnsAuthPostRequest;
 import tour_recommend.tour_recommend_back.dto.post.SnsAuthPostDto.CreateSnsAuthPostResponse;
-import tour_recommend.tour_recommend_back.entity.post.SnsAuthPost;
+import tour_recommend.tour_recommend_back.entity.sns_auth.SnsAuthPost;
 import tour_recommend.tour_recommend_back.repository.SnsAuthPostRepository;
 
 import java.util.List;
