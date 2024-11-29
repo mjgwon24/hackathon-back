@@ -31,5 +31,5 @@ public class Accommodation {
     private List<Room> rooms; // 숙소에 속한 방들
 
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY)
-    private List<Reservation> reservations;
+    private List<AccommodationReservation> accommodationReservations;
 }

@@ -1,3 +1,11 @@
+-- delete from room_availability;
+-- delete from accommodation_reservation;
+-- delete from room;
+-- delete from accommodation;
+-- delete from campsite_availability;
+-- delete from campsite_reservation;
+-- delete from campsite;
+
 -- accommodation add query
 INSERT INTO accommodation (accommodation_id, name, location, description, price, rating, thumbnail_path)
 VALUES
@@ -364,7 +372,7 @@ values
     (312, 3, 3, '2024-12-09', 24);
 
 -- reservation add query
--- INSERT INTO reservations (reservations_id, phone_number, total_price, accommodation_id, check_in_date, check_out_date, room_id)
+-- INSERT INTO accommodation_reservation (accommodation_reservation_id, phone_number, total_price, accommodation_id, check_in_date, check_out_date, room_id)
 -- values
 --     (1, '010-1234-5678', 75000, 1, '2024-11-27', '2024-11-28', 1),
 --     (2, '010-1234-5678', 68000, 2, '2024-11-27', '2024-11-28', 8),

@@ -44,7 +44,7 @@ public class ReservationService {
                         .build())
                 .toList();
 
-        List<FetchedReservation> reservations = fetchedAccommodation.getReservations().stream()
+        List<FetchedReservation> reservations = fetchedAccommodation.getAccommodationReservations().stream()
                 .map(reservation -> FetchedReservation.builder()
                         .id(reservation.getId())
                         .phoneNumber(reservation.getPhoneNumber())
