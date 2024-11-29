@@ -5,12 +5,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import tour_recommend.tour_recommend_back.dto.post.SalePostDto.FetchSalePostsByCategoryResponse.FetchedSalePostByCategory;
-import tour_recommend.tour_recommend_back.dto.post.SalePostDto.FetchSalePostsResponse.FetchedSalePost;
-import tour_recommend.tour_recommend_back.dto.post.SalePostDto.FetchSalePostsByCategoryResponse;
-import tour_recommend.tour_recommend_back.dto.post.SalePostDto.FetchSalePostsResponse;
-import tour_recommend.tour_recommend_back.dto.post.SalePostDto.CreateSalePostRequest;
-import tour_recommend.tour_recommend_back.dto.post.SalePostDto.SalePostResponse;
+import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.FetchSalePostsByCategoryResponse.FetchedSalePostByCategory;
+import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.FetchSalePostsResponse.FetchedSalePost;
+import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.FetchSalePostsByCategoryResponse;
+import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.FetchSalePostsResponse;
+import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.CreateSalePostRequest;
+import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.SalePostResponse;
 import tour_recommend.tour_recommend_back.entity.sale.SalePost;
 import tour_recommend.tour_recommend_back.repository.SalePostRepository;
 

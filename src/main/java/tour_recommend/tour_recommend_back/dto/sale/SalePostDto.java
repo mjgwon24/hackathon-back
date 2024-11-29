@@ -1,4 +1,4 @@
-package tour_recommend.tour_recommend_back.dto.post;
+package tour_recommend.tour_recommend_back.dto.sale;
 
 import lombok.Builder;
 import tour_recommend.tour_recommend_back.entity.sale.SalePost;
