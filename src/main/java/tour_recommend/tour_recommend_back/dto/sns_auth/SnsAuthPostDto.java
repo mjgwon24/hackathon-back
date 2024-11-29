@@ -1,4 +1,4 @@
-package tour_recommend.tour_recommend_back.dto.post;
+package tour_recommend.tour_recommend_back.dto.sns_auth;
 
 import lombok.Builder;
 import tour_recommend.tour_recommend_back.entity.sns_auth.SnsAuthPost;
