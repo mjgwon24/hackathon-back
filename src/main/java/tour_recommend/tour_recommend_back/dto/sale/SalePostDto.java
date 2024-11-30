@@ -120,7 +120,8 @@ public record SalePostDto() {
         }
     }
 
-    @Builder public record CreatePurchaseResponse(
+    @Builder
+    public record CreatePurchaseResponse(
             Long id,
             String category,
             String phoneNumber,
@@ -132,6 +133,30 @@ public record SalePostDto() {
             String sellerName,
             LocalDateTime createdAt,
             LocalDateTime updatedAt
-
     ) {}
+
+    @Builder
+    public record FetchPurchaseHistoryRequest(
+        String phoneNumber
+    ) {}
+
+    @Builder
+    public record FetchPurchaseHistoriesResponse(
+        List<FetchedPurchaseHistory> purchaseHistories
+    ) {
+        @Builder
+        public record FetchedPurchaseHistory(
+                Long id,
+                String category,
+                String phoneNumber,
+                String email,
+                String name,
+                Double price,
+                Integer quantity,
+                Double totalPrice,
+                String sellerName,
+                LocalDateTime createdAt,
+                LocalDateTime updatedAt
+        ) {}
+    }
 }
