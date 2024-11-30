@@ -155,7 +155,7 @@ public record SalePostDto() {
                 Integer quantity,
                 Double totalPrice,
                 String sellerName,
-                String SalePostThumbnailPath,
+                String salePostThumbnailPath,
                 LocalDateTime createdAt,
                 LocalDateTime updatedAt
         ) {}
