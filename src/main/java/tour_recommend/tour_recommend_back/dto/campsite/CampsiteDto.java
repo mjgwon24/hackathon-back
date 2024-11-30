@@ -2,6 +2,7 @@ package tour_recommend.tour_recommend_back.dto.campsite;
 
 import lombok.Builder;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class CampsiteDto {
@@ -34,6 +35,28 @@ public class CampsiteDto {
                 Double price,
                 Double rating,
                 String thumbnailPath
+        ) {}
+    }
+
+    @Builder
+    public record FetchCampsiteReservationsReq(
+            String phoneNumber
+    ) {}
+
+    @Builder
+    public record FetchCampsiteReservationRes(
+        List<FetchedCampsiteReservation> campsiteReservations
+    ) {
+        @Builder
+        public record FetchedCampsiteReservation(
+                Long id,
+                String phoneNumber,
+                String campsiteName,
+                String campsiteDescription,
+                String campsiteThumbnailPath,
+                LocalDateTime checkInDate,
+                LocalDateTime checkOutDate,
+                Double totalPrice
         ) {}
     }
 }
