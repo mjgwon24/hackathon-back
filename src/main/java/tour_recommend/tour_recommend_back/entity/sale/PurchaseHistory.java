@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import tour_recommend.tour_recommend_back.entity.accommodation.Accommodation;
 
 @Builder
 @Getter
@@ -41,4 +42,8 @@ public class PurchaseHistory {
 
     @Column(nullable = false)
     private String sellerName; // 판매자 이름
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sale_post_id")
+    private SalePost salePost;
 }
