@@ -188,6 +188,7 @@ public class SalePostService {
                         .totalPrice(purchaseHistory.getTotalPrice())
                         .sellerName(purchaseHistory.getSellerName())
                         .category(purchaseHistory.getCategory())
+                        .SalePostThumbnailPath(purchaseHistory.getSalePost().getThumbnailPath())
                         .createdAt(purchaseHistory.getCreatedAt())
                         .updatedAt(purchaseHistory.getUpdatedAt())
                         .build())
