@@ -21,8 +21,13 @@ public class AccommodationReservation {
     private Long id;
 
     private String phoneNumber;
+
+    private String email;
+
     private LocalDateTime checkInDate;
+
     private LocalDateTime checkOutDate;
+
     private Double totalPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
