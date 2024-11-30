@@ -77,8 +77,8 @@ public class ReservationAPI {
 
     // 숙소 예약 조회
     @GetMapping("/accommodation-reservations")
-    public ResponseEntity<ResponseDto<FetchAccomReservationsRes>> fetchAccommodationReservations(@RequestBody FetchAccomReservationReq fetchAccomReservationReq) {
-        FetchAccomReservationsRes fetchAccommodationsResponse = reservationService.fetchAccommodationReservations(fetchAccomReservationReq);
+    public ResponseEntity<ResponseDto<FetchAccomReservationsRes>> fetchAccommodationReservations(@RequestParam(name = "phoneNumber") String phoneNumber) {
+        FetchAccomReservationsRes fetchAccommodationsResponse = reservationService.fetchAccommodationReservations(phoneNumber);
 
         return ResponseEntity.ok(
                 new ResponseDto<>(ResponseDto.Status.SUCCESS, "숙소 예약 조회 성공", fetchAccommodationsResponse)
@@ -139,8 +139,8 @@ public class ReservationAPI {
     }
 
     @GetMapping("/campsite-reservations")
-    public ResponseEntity<ResponseDto<FetchCampsiteReservationRes>> fetchCampsiteReservations(@RequestBody FetchCampsiteReservationsReq fetchCampsiteReservationsReq) {
-        FetchCampsiteReservationRes fetchCampsiteReservationRes = reservationService.fetchCampsiteReservations(fetchCampsiteReservationsReq);
+    public ResponseEntity<ResponseDto<FetchCampsiteReservationRes>> fetchCampsiteReservations(@RequestParam(name = "phoneNumber") String phoneNumber) {
+        FetchCampsiteReservationRes fetchCampsiteReservationRes = reservationService.fetchCampsiteReservations(phoneNumber);
 
         return ResponseEntity.ok(
                 new ResponseDto<>(ResponseDto.Status.SUCCESS, "캠핑장 예약 조회 성공", fetchCampsiteReservationRes)

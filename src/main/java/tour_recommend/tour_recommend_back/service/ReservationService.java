@@ -212,9 +212,9 @@ public class ReservationService {
         }
     }
 
-    public FetchAccomReservationsRes fetchAccommodationReservations(FetchAccomReservationReq fetchAccomReservationReq) {
+    public FetchAccomReservationsRes fetchAccommodationReservations(String phoneNumber) {
         List<AccommodationReservation> fetchedAccomReservations =
-                accommodationReservationRepository.findByPhoneNumberOrderByIdDesc(fetchAccomReservationReq.phoneNumber());
+                accommodationReservationRepository.findByPhoneNumberOrderByIdDesc(phoneNumber);
 
         List<FetchedAccomReservation> accomReservations = fetchedAccomReservations.stream()
                 .map(accommodationReservation -> FetchedAccomReservation.builder()
@@ -368,11 +368,10 @@ public class ReservationService {
         }
     }
 
-    public FetchCampsiteReservationRes fetchCampsiteReservations(FetchCampsiteReservationsReq fetchCampsiteReservationsReq) {
+    public FetchCampsiteReservationRes fetchCampsiteReservations(String phoneNumber) {
         List<CampsiteReservation> fetchedCampsiteReservations =
-                campsiteReservationRepository.findByPhoneNumberOrderByIdDesc(fetchCampsiteReservationsReq.phoneNumber());
+                campsiteReservationRepository.findByPhoneNumberOrderByIdDesc(phoneNumber);
 
-        System.out.println(fetchCampsiteReservationsReq.phoneNumber());
         List<FetchedCampsiteReservation> campsiteReservations = fetchedCampsiteReservations.stream()
                 .map(campsiteReservation -> FetchedCampsiteReservation.builder()
                         .id(campsiteReservation.getId())
