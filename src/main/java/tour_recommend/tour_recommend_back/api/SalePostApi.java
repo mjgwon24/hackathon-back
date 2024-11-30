@@ -76,8 +76,8 @@ public class SalePostApi {
     }
 
     @GetMapping("/purchase-histories")
-    public ResponseEntity<ResponseDto<FetchPurchaseHistoriesResponse>> fetchPurchaseHistories(@RequestBody FetchPurchaseHistoryRequest fetchPurchaseHistoryRequest) {
-        FetchPurchaseHistoriesResponse fetchPurchaseHistoriesResponse = salePostService.fetchPurchaseHistories(fetchPurchaseHistoryRequest);
+    public ResponseEntity<ResponseDto<FetchPurchaseHistoriesResponse>> fetchPurchaseHistories(@RequestParam(name = "phoneNumber") String phoneNumber) {
+        FetchPurchaseHistoriesResponse fetchPurchaseHistoriesResponse = salePostService.fetchPurchaseHistories(phoneNumber);
 
         return new ResponseEntity<>(
                 new ResponseDto<>(Status.SUCCESS, "구매 내역 조회 성공", fetchPurchaseHistoriesResponse),

@@ -173,8 +173,8 @@ public class SalePostService {
                 .build();
     }
 
-    public FetchPurchaseHistoriesResponse fetchPurchaseHistories(FetchPurchaseHistoryRequest fetchPurchaseHistoryRequest) {
-        List<PurchaseHistory> fetchedPurchaseHistories = purchaseHistoryRepository.findByPhoneNumberOrderByCreatedAtDesc(fetchPurchaseHistoryRequest.phoneNumber());
+    public FetchPurchaseHistoriesResponse fetchPurchaseHistories(String phoneNumber) {
+        List<PurchaseHistory> fetchedPurchaseHistories = purchaseHistoryRepository.findByPhoneNumberOrderByCreatedAtDesc(phoneNumber);
 
         List<FetchedPurchaseHistory> purchaseHistories = fetchedPurchaseHistories.stream()
                 .map(purchaseHistory -> FetchedPurchaseHistory.builder()
