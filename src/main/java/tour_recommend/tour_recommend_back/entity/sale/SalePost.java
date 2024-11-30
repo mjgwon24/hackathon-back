@@ -39,11 +39,13 @@ public class SalePost {
     @Column(nullable = false)
     private String sellerName; // 판매자 이름
 
+    private String thumbnailPath; // 썸네일 이미지 경로
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 
-    private int rating;
+    private Double rating;
 
     @ElementCollection
     @CollectionTable(name = "sale_post_images", joinColumns = @JoinColumn(name = "sale_post_id"))
