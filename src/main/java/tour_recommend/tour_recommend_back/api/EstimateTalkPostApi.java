@@ -14,7 +14,7 @@ import tour_recommend.tour_recommend_back.service.EstimateTalkPostService;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/estimate-talk")
-public class EstimateTalkApi {
+public class EstimateTalkPostApi {
     private final EstimateTalkPostService estimateTalkPostService;
 
     // 견적톡 등록
