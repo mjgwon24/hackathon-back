@@ -74,4 +74,14 @@ public class SalePostApi {
                 HttpStatus.OK
         );
     }
+
+    @GetMapping("/purchase-history")
+    public ResponseEntity<ResponseDto<FetchPurchaseHistoriesResponse>> fetchPurchaseHistory(@RequestBody FetchPurchaseHistoryRequest fetchPurchaseHistoryRequest) {
+        FetchPurchaseHistoriesResponse fetchPurchaseHistoriesResponse = salePostService.fetchPurchaseHistory(fetchPurchaseHistoryRequest);
+
+        return new ResponseEntity<>(
+                new ResponseDto<>(Status.SUCCESS, "구매 내역 조회 성공", fetchPurchaseHistoriesResponse),
+                HttpStatus.OK
+        );
+    }
 }

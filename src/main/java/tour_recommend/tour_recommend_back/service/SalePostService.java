@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.*;
+import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.FetchPurchaseHistoriesResponse.*;
 import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.FetchSalePostsByCategoryResponse.FetchedSalePostByCategory;
 import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.FetchSalePostsResponse.FetchedSalePost;
 import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.FetchSalePostsByCategoryResponse;
@@ -169,6 +170,31 @@ public class SalePostService {
                 .sellerName(purchaseHistoryPs.getSellerName())
                 .createdAt(purchaseHistoryPs.getCreatedAt())
                 .updatedAt(purchaseHistoryPs.getUpdatedAt())
+                .build();
+    }
+
+    public FetchPurchaseHistoriesResponse fetchPurchaseHistory(FetchPurchaseHistoryRequest fetchPurchaseHistoryRequest) {
+        List<PurchaseHistory> fetchedPurchaseHistories = purchaseHistoryRepository.findByPhoneNumberOrderByCreatedAtDesc(fetchPurchaseHistoryRequest.phoneNumber());
+
+        List<FetchedPurchaseHistory> purchaseHistories = fetchedPurchaseHistories.stream()
+                .map(purchaseHistory -> FetchedPurchaseHistory.builder()
+                        .id(purchaseHistory.getId())
+                        .category(purchaseHistory.getCategory())
+                        .phoneNumber(purchaseHistory.getPhoneNumber())
+                        .email(purchaseHistory.getEmail())
+                        .name(purchaseHistory.getName())
+                        .price(purchaseHistory.getPrice())
+                        .quantity(purchaseHistory.getQuantity())
+                        .totalPrice(purchaseHistory.getTotalPrice())
+                        .sellerName(purchaseHistory.getSellerName())
+                        .category(purchaseHistory.getCategory())
+                        .createdAt(purchaseHistory.getCreatedAt())
+                        .updatedAt(purchaseHistory.getUpdatedAt())
+                        .build())
+                .toList();
+
+        return FetchPurchaseHistoriesResponse.builder()
+                .purchaseHistories(purchaseHistories)
                 .build();
     }
 
