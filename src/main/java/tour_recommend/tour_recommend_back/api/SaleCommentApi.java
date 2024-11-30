@@ -15,10 +15,10 @@ import tour_recommend.tour_recommend_back.service.SaleCommentService;
 public class SaleCommentApi {
     private final SaleCommentService saleCommentService;
 
-    @PostMapping("/posts/{salePostId}/comments")
-    public ResponseEntity<ResponseDto<CreateSaleCommentResponse>> createSaleComment(@PathVariable("salePostId") Long salePostId,
+    @PostMapping("/posts/{postId}/comments")
+    public ResponseEntity<ResponseDto<CreateSaleCommentResponse>> createSaleComment(@PathVariable("postId") Long postId,
                                                                             @RequestBody CreateSaleCommentRequest createSaleCommentRequest) {
-        CreateSaleCommentResponse createCommentResponse = saleCommentService.createSaleComment(salePostId, createSaleCommentRequest);
+        CreateSaleCommentResponse createCommentResponse = saleCommentService.createSaleComment(postId, createSaleCommentRequest);
 
         return new ResponseEntity<>(
                 new ResponseDto<>(Status.SUCCESS, "게시글 댓글 등록 성공", createCommentResponse),
@@ -26,10 +26,10 @@ public class SaleCommentApi {
         );
     }
 
-    @PutMapping("/comments/{saleCommentId}")
-    public ResponseEntity<ResponseDto<UpdateSaleCommentResponse>> updateSaleComment(@PathVariable("saleCommentId") Long saleCommentId,
+    @PutMapping("/comments/{commentId}")
+    public ResponseEntity<ResponseDto<UpdateSaleCommentResponse>> updateSaleComment(@PathVariable("commentId") Long commentId,
                                                                                 @RequestBody UpdateSaleCommentRequest updateSaleCommentRequest) {
-        UpdateSaleCommentResponse updateSaleCommentResponse = saleCommentService.updateSaleComment(saleCommentId, updateSaleCommentRequest);
+        UpdateSaleCommentResponse updateSaleCommentResponse = saleCommentService.updateSaleComment(commentId, updateSaleCommentRequest);
 
         return new ResponseEntity<>(
                 new ResponseDto<>(Status.SUCCESS, "댓글 수정 성공", updateSaleCommentResponse),
@@ -37,11 +37,11 @@ public class SaleCommentApi {
         );
     }
 
-    @GetMapping("/posts/{salePostId}/comments")
-    public ResponseEntity<ResponseDto<FetchSaleCommentsResponse>> fetchSaleComments(@PathVariable("salePostId") Long salePostId,
+    @GetMapping("/posts/{postId}/comments")
+    public ResponseEntity<ResponseDto<FetchSaleCommentsResponse>> fetchSaleComments(@PathVariable("postId") Long postId,
                                                                                 @RequestParam(defaultValue = "0") int pageNumber,
                                                                                 @RequestParam(defaultValue = "10") int size) {
-        FetchSaleCommentsResponse fetchSaleCommentsResponse = saleCommentService.fetchSaleComments(salePostId, pageNumber, size);
+        FetchSaleCommentsResponse fetchSaleCommentsResponse = saleCommentService.fetchSaleComments(postId, pageNumber, size);
 
         return new ResponseEntity<>(
                 new ResponseDto<>(Status.SUCCESS, "댓글 조회 성공", fetchSaleCommentsResponse),
