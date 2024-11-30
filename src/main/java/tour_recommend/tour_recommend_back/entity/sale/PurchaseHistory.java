@@ -5,7 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import tour_recommend.tour_recommend_back.entity.accommodation.Accommodation;
+
+import java.time.LocalDateTime;
 
 @Builder
 @Getter
@@ -42,6 +46,10 @@ public class PurchaseHistory {
 
     @Column(nullable = false)
     private String sellerName; // 판매자 이름
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sale_post_id")

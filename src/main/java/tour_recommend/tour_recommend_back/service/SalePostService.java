@@ -5,13 +5,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.*;
 import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.FetchSalePostsByCategoryResponse.FetchedSalePostByCategory;
 import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.FetchSalePostsResponse.FetchedSalePost;
 import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.FetchSalePostsByCategoryResponse;
 import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.FetchSalePostsResponse;
 import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.CreateSalePostRequest;
 import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.SalePostResponse;
+import tour_recommend.tour_recommend_back.entity.sale.PurchaseHistory;
 import tour_recommend.tour_recommend_back.entity.sale.SalePost;
+import tour_recommend.tour_recommend_back.repository.PurchaseHistoryRepository;
 import tour_recommend.tour_recommend_back.repository.SalePostRepository;
 
 import java.util.List;
@@ -20,6 +23,7 @@ import java.util.List;
 @Service
 public class SalePostService {
     private final SalePostRepository salePostRepository;
+    private final PurchaseHistoryRepository purchaseHistoryRepository;
 
     // 판매 게시글 등록
     public SalePostResponse createSalePost(CreateSalePostRequest createSalePostRequest) {
@@ -136,6 +140,35 @@ public class SalePostService {
                 .currentPage(fetchedSalePostsByCategory.getNumber())
                 .totalPages(fetchedSalePostsByCategory.getTotalPages())
                 .totalElements(fetchedSalePostsByCategory.getTotalElements())
+                .build();
+    }
+
+    public CreatePurchaseResponse createPurchase(Long postId, CreatePurchaseRequest createPurchaseRequest) {
+        SalePost fetchedSalePost = salePostRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("postId에 해당하는 후기 게시글이 존재하지 않습니다."));
+
+        PurchaseHistory purchaseHistory = CreatePurchaseRequest.builder()
+                .phoneNumber(createPurchaseRequest.phoneNumber())
+                .email(createPurchaseRequest.email())
+                .price(createPurchaseRequest.price())
+                .quantity(createPurchaseRequest.quantity())
+                .build()
+                .toEntity(fetchedSalePost);
+
+        PurchaseHistory purchaseHistoryPs = purchaseHistoryRepository.save(purchaseHistory);
+
+        return CreatePurchaseResponse.builder()
+                .id(purchaseHistoryPs.getId())
+                .category(purchaseHistoryPs.getCategory())
+                .phoneNumber(purchaseHistoryPs.getPhoneNumber())
+                .email(purchaseHistoryPs.getEmail())
+                .name(purchaseHistoryPs.getName())
+                .price(purchaseHistoryPs.getPrice())
+                .quantity(purchaseHistoryPs.getQuantity())
+                .totalPrice(purchaseHistoryPs.getTotalPrice())
+                .sellerName(purchaseHistoryPs.getSellerName())
+                .createdAt(purchaseHistoryPs.getCreatedAt())
+                .updatedAt(purchaseHistoryPs.getUpdatedAt())
                 .build();
     }
 

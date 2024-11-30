@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tour_recommend.tour_recommend_back.dto.common.ResponseDto;
 import tour_recommend.tour_recommend_back.dto.common.ResponseDto.Status;
+import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.*;
 import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.FetchSalePostsByCategoryResponse;
 import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.FetchSalePostsResponse;
 import tour_recommend.tour_recommend_back.dto.sale.SalePostDto.CreateSalePostRequest;
@@ -53,12 +54,23 @@ public class SalePostApi {
     // 카테고리별 판매 게시글 조회
     @GetMapping("/posts/category/{category}")
     public ResponseEntity<ResponseDto<FetchSalePostsByCategoryResponse>> fetchSalePostsByCategory(@PathVariable("category") String category,
-                                                                                                              @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
-                                                                                                              @RequestParam(name = "size", defaultValue = "10") int size) {
+                                                                                                  @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
+                                                                                                  @RequestParam(name = "size", defaultValue = "10") int size) {
         FetchSalePostsByCategoryResponse fetchSalePostsByCategoryResponse = salePostService.getSalePostsByCategory(category, pageNumber, size);
 
         return new ResponseEntity<>(
                 new ResponseDto<>(Status.SUCCESS, "카테고리별 판매 게시글 목록 조회 성공", fetchSalePostsByCategoryResponse),
+                HttpStatus.OK
+        );
+    }
+
+    @PostMapping("/posts/{postId}/purchase")
+    public ResponseEntity<ResponseDto<CreatePurchaseResponse>> createPurchase(@PathVariable("postId") Long postId,
+                                                                              @RequestBody CreatePurchaseRequest createPurchaseRequest) {
+        CreatePurchaseResponse createPurchaseResponse = salePostService.createPurchase(postId, createPurchaseRequest);
+
+        return new ResponseEntity<>(
+                new ResponseDto<>(Status.SUCCESS, "구매 성공", createPurchaseResponse),
                 HttpStatus.OK
         );
     }

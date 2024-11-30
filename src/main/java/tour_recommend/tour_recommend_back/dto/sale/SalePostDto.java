@@ -1,6 +1,7 @@
 package tour_recommend.tour_recommend_back.dto.sale;
 
 import lombok.Builder;
+import tour_recommend.tour_recommend_back.entity.sale.PurchaseHistory;
 import tour_recommend.tour_recommend_back.entity.sale.SalePost;
 
 import java.time.LocalDateTime;
@@ -94,4 +95,43 @@ public record SalePostDto() {
                 LocalDateTime updateAt
         ) {}
     }
+
+    @Builder
+    public record CreatePurchaseRequest(
+            String phoneNumber,
+            String email,
+            Double price,
+            Integer quantity
+    ) {
+        public PurchaseHistory toEntity(SalePost salePost) {
+            return PurchaseHistory.builder()
+                    .category(salePost.getCategory())
+                    .phoneNumber(this.phoneNumber)
+                    .email(this.email)
+                    .name(salePost.getName())
+                    .price(this.price)
+                    .quantity(this.quantity)
+                    .totalPrice(this.price * this.quantity)
+                    .sellerName(salePost.getSellerName())
+                    .salePost(salePost)
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .build();
+        }
+    }
+
+    @Builder public record CreatePurchaseResponse(
+            Long id,
+            String category,
+            String phoneNumber,
+            String email,
+            String name,
+            Double price,
+            Integer quantity,
+            Double totalPrice,
+            String sellerName,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt
+
+    ) {}
 }

@@ -28,10 +28,8 @@ public class SaleComment {
     @Column(nullable = false)
     private String author;
 
-    @CreatedDate
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
     private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
