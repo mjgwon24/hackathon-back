@@ -15,7 +15,8 @@ public record SalePostDto() {
             String detailedDescription,
             Double price,
             String sellerName,
-            int rating,
+            String thumbnailPath,
+            Double rating,
             List<String> imagePathList
     ) {
         public SalePost toEntity() {
@@ -43,7 +44,8 @@ public record SalePostDto() {
             String detailedDescription,
             Double price,
             String sellerName,
-            int rating,
+            String thumbnailPath,
+            Double rating,
             List<String> imagePathList,
             LocalDateTime createAt,
             LocalDateTime updateAt
@@ -64,7 +66,8 @@ public record SalePostDto() {
                 String shortDescription,
                 Double price,
                 String sellerName,
-                int rating,
+                String thumbnailPath,
+                Double rating,
                 LocalDateTime createAt,
                 LocalDateTime updateAt
         ) {}
@@ -85,7 +88,8 @@ public record SalePostDto() {
                 String shortDescription,
                 Double price,
                 String sellerName,
-                int rating,
+                String thumbnailPath,
+                Double rating,
                 LocalDateTime createAt,
                 LocalDateTime updateAt
         ) {}
