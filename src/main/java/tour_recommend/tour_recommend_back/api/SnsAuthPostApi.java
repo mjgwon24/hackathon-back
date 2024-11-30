@@ -50,4 +50,17 @@ public class SnsAuthPostApi {
                 HttpStatus.OK
         );
     }
+
+    @GetMapping("/posts/category/{postType}")
+    public ResponseEntity<ResponseDto<FetchSnsAuthPostsResponse>> fetchSnsAuthPostsByPostType(@PathVariable("postType") String postType,
+                                                                                              @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
+                                                                                              @RequestParam(name = "size", defaultValue = "10") int size) {
+        FetchSnsAuthPostsResponse fetchSnsAuthPostsResponse = snsAuthPostService.fetchSnsAuthPostsByPostType(postType, pageNumber, size);
+
+        return new ResponseEntity<>(
+                new ResponseDto<>(Status.SUCCESS, "postType별 SNS 인증 게시글 목록 조회 성공", fetchSnsAuthPostsResponse),
+                HttpStatus.OK
+        );
+    }
+
 }
