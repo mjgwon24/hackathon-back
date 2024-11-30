@@ -53,4 +53,27 @@ public record accommodationDto() {
                 String thumbnailPath
         ) {}
     }
+
+    @Builder
+    public record FetchAccomReservationReq(
+        String phoneNumber
+    ) {}
+
+    @Builder
+    public record FetchAccomReservationsRes(
+        List<FetchedAccomReservation> accomReservations
+    ) {
+        @Builder
+        public record FetchedAccomReservation(
+                Long id,
+                String phoneNumber,
+                String email,
+                String accommodationName,
+                String accommodationDescription,
+                String accommodationThumbnailPath,
+                LocalDateTime checkInDate,
+                LocalDateTime checkOutDate,
+                Double totalPrice
+        ) {}
+    }
 }

@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.*;
 import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.FetchAccommodationsResponse;
 import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.FetchAccommodationResponse;
 import tour_recommend.tour_recommend_back.dto.campsite.CampsiteDto.FetchCampsitesResponse;
@@ -16,12 +17,11 @@ import java.time.LocalDate;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/reservation")
 public class ReservationAPI {
     private final ReservationService reservationService;
 
     // 숙소 조회
-    @GetMapping("/accommodations/{accommodationId}")
+    @GetMapping("/reservation/accommodations/{accommodationId}")
     public ResponseEntity<ResponseDto<FetchAccommodationResponse>> fetchAccommodation(@PathVariable("accommodationId") Long accommodationId) {
         FetchAccommodationResponse fetchAccommodationResponse = reservationService.fetchAccommodation(accommodationId);
 
@@ -31,9 +31,9 @@ public class ReservationAPI {
     }
 
     // 숙소 목록 조회
-    @GetMapping("/accommodations")
+    @GetMapping("/reservation/accommodations")
     public ResponseEntity<ResponseDto<FetchAccommodationsResponse>> fetchAccommodations(@RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
-                                                                                                        @RequestParam(name = "size", defaultValue = "10") int size) {
+                                                                                        @RequestParam(name = "size", defaultValue = "10") int size) {
         FetchAccommodationsResponse fetchAccommodationsResponse = reservationService.fetchAccommodations(pageNumber, size);
 
         return ResponseEntity.ok(
@@ -42,7 +42,7 @@ public class ReservationAPI {
     }
 
     // 날짜에 따른 남은 숙소 방 수 조회
-    @GetMapping("/accommodations/{accommodationId}/available-rooms")
+    @GetMapping("/reservation/accommodations/{accommodationId}/available-rooms")
     public ResponseEntity<ResponseDto<Integer>> fetchAvailableRooms(@PathVariable("accommodationId") Long accommodationId,
                                                                     @RequestParam("checkInDate") @DateTimeFormat(iso =  DateTimeFormat.ISO.DATE) LocalDate checkInDate,
                                                                     @RequestParam("checkOutDate") @DateTimeFormat(iso =  DateTimeFormat.ISO.DATE) LocalDate checkOutDate) {
@@ -55,7 +55,7 @@ public class ReservationAPI {
 
     // 숙소 예약
     @Transactional
-    @PostMapping("/accommodations/{accommodationId}/reservations")
+    @PostMapping("/reservation/accommodations/{accommodationId}")
     public ResponseEntity<ResponseDto<Long>> reserveAccommodation(@PathVariable("accommodationId") Long accommodationId,
                                                                   @RequestParam("checkInDate") @DateTimeFormat(iso =  DateTimeFormat.ISO.DATE) LocalDate checkInDate,
                                                                   @RequestParam("checkOutDate") @DateTimeFormat(iso =  DateTimeFormat.ISO.DATE) LocalDate checkOutDate,
@@ -74,8 +74,18 @@ public class ReservationAPI {
         }
     }
 
+    // 숙소 예약 조회
+    @GetMapping("/accommodation-reservations")
+    public ResponseEntity<ResponseDto<FetchAccomReservationsRes>> fetchAccommodationReservations(@RequestBody FetchAccomReservationReq fetchAccomReservationReq) {
+        FetchAccomReservationsRes fetchAccommodationsResponse = reservationService.fetchAccommodationReservations(fetchAccomReservationReq);
+
+        return ResponseEntity.ok(
+                new ResponseDto<>(ResponseDto.Status.SUCCESS, "숙소 예약 조회 성공", fetchAccommodationsResponse)
+        );
+    }
+
     // 캠핑장 조회
-    @GetMapping("/campsites/{campsiteId}")
+    @GetMapping("/reservation/campsites/{campsiteId}")
     public ResponseEntity<ResponseDto<FetchCampsiteResponse>> fetchCampsite(@PathVariable("campsiteId") Long campsiteId) {
         FetchCampsiteResponse fetchCampsiteResponse = reservationService.fetchCampsite(campsiteId);
 
@@ -85,9 +95,9 @@ public class ReservationAPI {
     }
 
     // 캠핑장 목록 조회
-    @GetMapping("/campsites")
+    @GetMapping("/reservation/campsites")
     public ResponseEntity<ResponseDto<FetchCampsitesResponse>> fetchCampsites(@RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
-                                                                            @RequestParam(name = "size", defaultValue = "10") int size) {
+                                                                              @RequestParam(name = "size", defaultValue = "10") int size) {
         FetchCampsitesResponse fetchCampsiteResponse = reservationService.fetchCampsites(pageNumber, size);
 
         return ResponseEntity.ok(
@@ -96,10 +106,10 @@ public class ReservationAPI {
     }
 
     // 날짜에 따른 남은 캠핑장 방 수 조회
-    @GetMapping("/campsites/{campsiteId}/available-rooms")
+    @GetMapping("/reservation/campsites/{campsiteId}/available-rooms")
     public ResponseEntity<ResponseDto<Integer>> fetchCampsiteAvailableRooms(@PathVariable("campsiteId") Long campsiteId,
-                                                                    @RequestParam("checkInDate") @DateTimeFormat(iso =  DateTimeFormat.ISO.DATE) LocalDate checkInDate,
-                                                                    @RequestParam("checkOutDate") @DateTimeFormat(iso =  DateTimeFormat.ISO.DATE) LocalDate checkOutDate) {
+                                                                            @RequestParam("checkInDate") @DateTimeFormat(iso =  DateTimeFormat.ISO.DATE) LocalDate checkInDate,
+                                                                            @RequestParam("checkOutDate") @DateTimeFormat(iso =  DateTimeFormat.ISO.DATE) LocalDate checkOutDate) {
         int availableRooms = reservationService.fetchAvailableCampsites(campsiteId, checkInDate, checkOutDate);
 
         return ResponseEntity.ok(
@@ -108,12 +118,12 @@ public class ReservationAPI {
     }
 
     // 캠핑장 예약
-    @PostMapping("/campsites/{campsiteId}/reservations")
+    @PostMapping("/reservation/campsites/{campsiteId}")
     public ResponseEntity<ResponseDto<Long>> reserveCampsite(@PathVariable("campsiteId") Long campsiteId,
-                                                                  @RequestParam("checkInDate") @DateTimeFormat(iso =  DateTimeFormat.ISO.DATE) LocalDate checkInDate,
-                                                                  @RequestParam("checkOutDate") @DateTimeFormat(iso =  DateTimeFormat.ISO.DATE) LocalDate checkOutDate,
-                                                                  @RequestParam("phoneNumber") String phoneNumber,
-                                                                  @RequestParam("totalPrice") Double totalPrice) {
+                                                             @RequestParam("checkInDate") @DateTimeFormat(iso =  DateTimeFormat.ISO.DATE) LocalDate checkInDate,
+                                                             @RequestParam("checkOutDate") @DateTimeFormat(iso =  DateTimeFormat.ISO.DATE) LocalDate checkOutDate,
+                                                             @RequestParam("phoneNumber") String phoneNumber,
+                                                             @RequestParam("totalPrice") Double totalPrice) {
         try {
             reservationService.reserveCampsite(campsiteId, phoneNumber, totalPrice, checkInDate, checkOutDate);
 

@@ -1,6 +1,5 @@
 package tour_recommend.tour_recommend_back.service;
 
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -8,7 +7,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.FetchAccommodationsResponse;
+import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.*;
+import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.FetchAccomReservationsRes.*;
 import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.FetchAccommodationsResponse.FetchedAccommodation;
 import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.FetchAccommodationResponse.FetchedReservation;
 import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.FetchAccommodationResponse.FetchedRoom;
@@ -208,6 +208,29 @@ public class ReservationService {
             log.info("roomAvailability: {}", roomAvailability);
             roomAvailabilityRepository.decreaseAvailableCountByRoomIdAndDate(roomAvailability.getRoom().getId(), roomAvailability.getDate());
         }
+    }
+
+    public FetchAccomReservationsRes fetchAccommodationReservations(FetchAccomReservationReq fetchAccomReservationReq) {
+        List<AccommodationReservation> fetchedAccomReservations =
+                accommodationReservationRepository.findByPhoneNumberOrderByIdDesc(fetchAccomReservationReq.phoneNumber());
+
+        List<FetchedAccomReservation> accomReservations = fetchedAccomReservations.stream()
+                .map(accommodationReservation -> FetchedAccomReservation.builder()
+                        .id(accommodationReservation.getId())
+                        .phoneNumber(accommodationReservation.getPhoneNumber())
+                        .email(accommodationReservation.getEmail())
+                        .accommodationName(accommodationReservation.getAccommodation().getName())
+                        .accommodationDescription(accommodationReservation.getAccommodation().getDescription())
+                        .accommodationThumbnailPath(accommodationReservation.getAccommodation().getThumbnailPath())
+                        .checkInDate(accommodationReservation.getCheckInDate())
+                        .checkOutDate(accommodationReservation.getCheckOutDate())
+                        .totalPrice(accommodationReservation.getTotalPrice())
+                        .build())
+                .toList();
+
+        return FetchAccomReservationsRes.builder()
+                .accomReservations(accomReservations)
+                .build();
     }
 
     // 캠핑장 조회
