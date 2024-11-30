@@ -13,6 +13,8 @@ import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.Fet
 import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.FetchAccommodationResponse.FetchedReservation;
 import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.FetchAccommodationResponse.FetchedRoom;
 import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.FetchAccommodationResponse;
+import tour_recommend.tour_recommend_back.dto.campsite.CampsiteDto.*;
+import tour_recommend.tour_recommend_back.dto.campsite.CampsiteDto.FetchCampsiteReservationRes.FetchedCampsiteReservation;
 import tour_recommend.tour_recommend_back.dto.campsite.CampsiteDto.FetchCampsitesResponse.FetchedCampsite;
 import tour_recommend.tour_recommend_back.dto.campsite.CampsiteDto.FetchCampsitesResponse;
 import tour_recommend.tour_recommend_back.dto.campsite.CampsiteDto.FetchCampsiteResponse;
@@ -364,5 +366,28 @@ public class ReservationService {
         for (CampsiteAvailability campsiteAvailability : filteredCampsiteAvailabilities) {
             campsiteAvailabilityRepository.decreaseAvailableCountByCampsiteIdAndDate(campsiteAvailability.getCampsite().getId(), campsiteAvailability.getDate());
         }
+    }
+
+    public FetchCampsiteReservationRes fetchCampsiteReservations(FetchCampsiteReservationsReq fetchCampsiteReservationsReq) {
+        List<CampsiteReservation> fetchedCampsiteReservations =
+                campsiteReservationRepository.findByPhoneNumberOrderByIdDesc(fetchCampsiteReservationsReq.phoneNumber());
+
+        System.out.println(fetchCampsiteReservationsReq.phoneNumber());
+        List<FetchedCampsiteReservation> campsiteReservations = fetchedCampsiteReservations.stream()
+                .map(campsiteReservation -> FetchedCampsiteReservation.builder()
+                        .id(campsiteReservation.getId())
+                        .phoneNumber(campsiteReservation.getPhoneNumber())
+                        .campsiteName(campsiteReservation.getCampsite().getName())
+                        .campsiteDescription(campsiteReservation.getCampsite().getDescription())
+                        .campsiteThumbnailPath(campsiteReservation.getCampsite().getThumbnailPath())
+                        .checkInDate(campsiteReservation.getCheckInDate())
+                        .checkOutDate(campsiteReservation.getCheckOutDate())
+                        .totalPrice(campsiteReservation.getTotalPrice())
+                        .build())
+                .toList();
+
+        return FetchCampsiteReservationRes.builder()
+                .campsiteReservations(campsiteReservations)
+                .build();
     }
 }

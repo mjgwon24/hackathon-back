@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.*;
 import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.FetchAccommodationsResponse;
 import tour_recommend.tour_recommend_back.dto.accommodation.accommodationDto.FetchAccommodationResponse;
+import tour_recommend.tour_recommend_back.dto.campsite.CampsiteDto.*;
 import tour_recommend.tour_recommend_back.dto.campsite.CampsiteDto.FetchCampsitesResponse;
 import tour_recommend.tour_recommend_back.dto.campsite.CampsiteDto.FetchCampsiteResponse;
 import tour_recommend.tour_recommend_back.dto.common.ResponseDto;
@@ -137,4 +138,12 @@ public class ReservationAPI {
         }
     }
 
+    @GetMapping("/campsite-reservations")
+    public ResponseEntity<ResponseDto<FetchCampsiteReservationRes>> fetchCampsiteReservations(@RequestBody FetchCampsiteReservationsReq fetchCampsiteReservationsReq) {
+        FetchCampsiteReservationRes fetchCampsiteReservationRes = reservationService.fetchCampsiteReservations(fetchCampsiteReservationsReq);
+
+        return ResponseEntity.ok(
+                new ResponseDto<>(ResponseDto.Status.SUCCESS, "캠핑장 예약 조회 성공", fetchCampsiteReservationRes)
+        );
+    }
 }
