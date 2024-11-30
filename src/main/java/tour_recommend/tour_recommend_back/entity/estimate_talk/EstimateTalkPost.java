@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Builder
 @Getter
 @AllArgsConstructor
@@ -29,4 +32,12 @@ public class EstimateTalkPost {
 
     @Column(nullable = false)
     private String contents;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    @ElementCollection
+    @CollectionTable(name = "estimate_talk_post_images", joinColumns = @JoinColumn(name = "estimate_talk_post_id"))
+    private List<String> imagePathList;
 }
