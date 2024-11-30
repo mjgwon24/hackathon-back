@@ -38,8 +38,8 @@ public class SnsAuthCommentApi {
 
     @GetMapping("/posts/{postId}/comments")
     public ResponseEntity<ResponseDto<FetchSnsAuthCommentsResponse>> fetchSnsAuthComments(@PathVariable("postId") Long postId,
-                                                                                       @RequestParam(defaultValue = "0") int pageNumber,
-                                                                                       @RequestParam(defaultValue = "10") int size) {
+                                                                                       @RequestParam(defaultValue = "0", name = "pageNumber") int pageNumber,
+                                                                                       @RequestParam(defaultValue = "10", name = "size") int size) {
         FetchSnsAuthCommentsResponse fetchSnsAuthCommentsResponse = snsAuthCommentService.fetchSnsAuthComments(postId, pageNumber, size);
 
         return new ResponseEntity<>(
